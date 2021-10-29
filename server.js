@@ -2,6 +2,7 @@ require('dotenv').config({path: "./config.env"});
 
 const express = require('express');
 const connectDB = require('./config/db');
+const cors = require('cors');
 
 connectDB();
 
@@ -9,6 +10,7 @@ const MovieRouter = require('./routes/movie');
 const ActorRouter = require('./routes/actor');
 
 const app = express();
+app.use(cors());
 
 app.use(express.json());
 
