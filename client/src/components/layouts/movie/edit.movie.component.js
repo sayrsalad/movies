@@ -18,14 +18,14 @@ export default class EditMovie extends Component {
 
     componentDidMount() {
         axios.get('http://localhost:5000/movie/' + this.props.match.params.id)
-            .then(movie => {
-                const d = new Date(movie.data.releaseDate);
-                movie.data.releaseDate = `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')}`;
+            .then(result => {
+                const d = new Date(result.data.movie.releaseDate);
+                result.data.movie.releaseDate = `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')}`;
                 this.setState({
-                    title: movie.data.title,
-                    story: movie.data.story,
-                    releaseDate: movie.data.releaseDate,
-                    duration: movie.data.duration
+                    title: result.data.movie.title,
+                    story: result.data.movie.story,
+                    releaseDate: result.data.movie.releaseDate,
+                    duration: result.data.movie.duration
                 })
             })
             .catch(err => console.log('Error: ' + err));

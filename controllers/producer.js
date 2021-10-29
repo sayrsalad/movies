@@ -1,5 +1,15 @@
+const Producer = require('../models/producer.model');
+
 exports.index = async (req, res, next) => {
-    res.send("Producers");
+    try {
+        const producer = await Producer.find();
+        res.status(200).json({
+            success: true,
+            producer
+        });
+    } catch (error) {
+        next(error);
+    }
 }
 
 exports.add = async (req, res, next) => {

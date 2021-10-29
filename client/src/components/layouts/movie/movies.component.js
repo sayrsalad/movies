@@ -41,7 +41,7 @@ export default class Movies extends Component {
 
     deleteMovie(id) {
         axios.delete('http://localhost:5000/movie/' + id)
-            .then(res => console.log(res.data.movie))
+            .then(res => console.log(res.data.message))
             .catch(err => console.log('Error: ' + err));
         this.setState({
             movie: this.state.movie.filter(el => el._id !== id)

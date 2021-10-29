@@ -1,7 +1,15 @@
 const Genre = require('../models/genre.model');
 
 exports.index = async (req, res, next) => {
-    res.send("Genres");
+    try {
+        const genre = await Genre.find();
+        res.status(200).json({
+            success: true,
+            genre
+        });
+    } catch (error) {
+        next(error);
+    }
 }
 
 exports.add = async (req, res, next) => {

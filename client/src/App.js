@@ -1,6 +1,8 @@
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons';
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.css';
 
 import Navbar from './components/layouts/navbar.component';
 

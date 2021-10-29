@@ -8,6 +8,8 @@ connectDB();
 
 const MovieRouter = require('./routes/movie');
 const ActorRouter = require('./routes/actor');
+const ProducerRouter = require('./routes/producer');
+const GenreRouter = require('./routes/genre');
 
 const app = express();
 app.use(cors());
@@ -18,6 +20,8 @@ const PORT = process.env.PORT || 5000;
 
 app.use('/movie', MovieRouter);
 app.use('/actor', ActorRouter);
+app.use('/producer', ProducerRouter);
+app.use('/genre', GenreRouter);
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
