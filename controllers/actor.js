@@ -13,17 +13,62 @@ exports.index = async (req, res, next) => {
 }
 
 exports.add = async (req, res, next) => {
-    res.send("Add Actors");
+    try {
+        const actor = new Actor(req.body);
+
+        actor.save();
+
+        res.status(200).json({
+            status: "Record Added",
+            success: true,
+            actor
+        });
+    } catch (error) {
+        next(error);
+    }
 }
 
 exports.update = async (req, res, next) => {
-    res.send("Update Actors");
+    try {
+        const actor = await Actor.findById(req.params.id);
+
+        actor.firstname = req.body.firstname;
+        actor.lastname = req.body.lastname;
+        actor.email = req.body.email;
+
+        actor.save();
+
+        res.status(200).json({
+            success: true,
+            actor
+        });
+    } catch (error) {
+        next(error);
+    }
 }
 
 exports.find = async (req, res, next) => {
-    res.send("Find Actors");
+    try {
+        const actor = await Actor.findById(req.params.id);
+
+        res.status(200).json({
+            success: true,
+            actor
+        });
+    } catch (error) {
+        next(error);
+    }
 }
 
 exports.remove = async (req, res, next) => {
-    res.send("Remove Actors");
+    try {
+        await Actor.findByIdAndDelete(req.params.id);
+
+        res.status(200).json({
+            success: true,
+            message: "Record Deleted"
+        });
+    } catch (error) {
+        next(error);
+    }
 }

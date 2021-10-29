@@ -17,11 +17,11 @@ export default class EditActor extends Component {
 
     componentDidMount() {
         axios.get('http://localhost:5000/actor/' + this.props.match.params.id)
-            .then(actor => {
+            .then(result => {
                 this.setState({
-                    firstname: actor.data.firstname,
-                    lastname: actor.data.lastname,
-                    email: actor.data.email,
+                    firstname: result.data.actor.firstname,
+                    lastname: result.data.actor.lastname,
+                    email: result.data.actor.email,
                 })
             })
             .catch(err => console.log('Error: ' + err));

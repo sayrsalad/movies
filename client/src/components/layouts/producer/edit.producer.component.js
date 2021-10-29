@@ -17,11 +17,11 @@ export default class EditProducer extends Component {
 
     componentDidMount() {
         axios.get('http://localhost:5000/producer/' + this.props.match.params.id)
-            .then(producer => {
+            .then(result => {
                 this.setState({
-                    name: producer.data.name,
-                    email: producer.data.email,
-                    website: producer.data.website,
+                    name: result.data.producer.name,
+                    email: result.data.producer.email,
+                    website: result.data.producer.website,
                 })
             })
             .catch(err => console.log('Error: ' + err));
