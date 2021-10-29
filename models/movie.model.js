@@ -8,6 +8,11 @@ const movieSchema = new Schema({
         require: true,
         trim: true
     },
+    poster: {
+        type: String,
+        require: true,
+        trim: true
+    },
     story: {
         type: String,
         require: true,

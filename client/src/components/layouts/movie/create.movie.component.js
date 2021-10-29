@@ -13,6 +13,7 @@ export default class CreateMovie extends Component {
 		super(props);
 		this.state = {
 			title: '',
+			poster: '',
 			story: '',
 			releaseDate: '',
 			duration: '',
@@ -42,31 +43,33 @@ export default class CreateMovie extends Component {
 			if (e.target.dataset.name === "genre") {
 				prevState.genre._id = e.target.value;
 				prevState.genre.name = e.target.options[e.target.options.selectedIndex].text;
+			} else if (e.target.dataset.name === "poster") {
+				prevState.poster = e.target.files[0];
 			} else {
 				prevState[e.target.dataset.name] = e.target.value;
 			}
 		});
-		// 	this.setState({
-		// 		[e.target.dataset.name] : e.target.value
-		// 	});
 	}
 
 	onSubmit(e) {
 		e.preventDefault();
 
-		const movie = {
-			title: this.state.title,
-			story: this.state.story,
-			releaseDate: this.state.releaseDate,
-			duration: this.state.duration,
-			genre: this.state.genre
-		}
-		console.log(movie.genre);
-		axios.post('http://localhost:5000/movie/add', movie)
-			.then(res => window.location = "/movie")
-			.catch(err => console.log('Error: '+ err));
+		const formData = new FormData();
+
+		formData.append("title", this.state.title);
+		formData.append("poster", this.state.poster);
+		formData.append("story", this.state.story);
+		formData.append("releaseDate", this.state.releaseDate);
+		formData.append("duration", this.state.duration);
+		formData.append("genre[_id]", this.state.genre._id);
+		formData.append("genre[name]", this.state.genre.name);
 
 		console.log(this.state.genre);
+
+		axios.post('http://localhost:5000/movie/add', formData)
+			.then(res => window.location = "/movie")
+			.catch(err => console.log('Error: ' + err));
+
 	}
 
 	genres() {
@@ -81,19 +84,24 @@ export default class CreateMovie extends Component {
 			<div className="container">
 				<h1>Create Movie</h1>
 
-				<form onSubmit={this.onSubmit}>
+				<form onSubmit={this.onSubmit} encType="multipart/form-data">
 					<div className="form-group">
-						<label className="control-label">Title</label>
+						<label htmlFor="title" className="control-label">Title</label>
 						<input type="text" className="form-control" id="title" data-name="title" onChange={this.onChange} required />
 					</div>
 
+					<div className="mb-3">
+						<label htmlFor="poster" className="form-label">Poster</label>
+						<input className="form-control" filename="poster" type="file" id="poster" data-name="poster" onChange={this.onChange} required />
+					</div>
+
 					<div className="form-group">
-						<label className="control-label">Story</label>
+						<label htmlFor="story" className="control-label">Story</label>
 						<input type="text" className="form-control" id="story" data-name="story" onChange={this.onChange} required />
 					</div>
 
 					<div className="form-group">
-						<label className="control-label">Genre</label>
+						<label htmlFor="genre" className="control-label">Genre</label>
 						<select className="form-control" data-name="genre" onChange={this.onChange} defaultValue={'0'} required>
 							<option value="0" disabled>-- Select Genre --</option>
 							{this.genres()}
@@ -101,12 +109,12 @@ export default class CreateMovie extends Component {
 					</div>
 
 					<div className="form-group">
-						<label className="control-label">Release Date</label>
+						<label htmlFor="releaseDate" className="control-label">Release Date</label>
 						<input type="date" className="form-control" id="releaseDate" data-name="releaseDate" onChange={this.onChange} required />
 					</div>
 
 					<div className="form-group">
-						<label className="control-label">Duration</label>
+						<label htmlFor="duration" className="control-label">Duration</label>
 						<input type="number" className="form-control" id="duration" data-name="duration" onChange={this.onChange} required />
 					</div>
 

@@ -60,22 +60,22 @@ export default class EditMovie extends Component {
 
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
-                        <label className="control-label">Title</label>
+                        <label htmlFor="title" className="control-label">Title</label>
                         <input type="text" className="form-control" id="title" data-name="title" onChange={this.onChange} value={this.state.title} required />
                     </div>
 
                     <div className="form-group">
-                        <label className="control-label">Story</label>
+                        <label htmlFor="story" className="control-label">Story</label>
                         <input type="text" className="form-control" id="story" data-name="story" onChange={this.onChange} value={this.state.story} required />
                     </div>
 
                     <div className="form-group">
-                        <label className="control-label">Release Date</label>
+                        <label htmlFor="releaseDate" className="control-label">Release Date</label>
                         <input type="date" className="form-control" id="releaseDate" data-name="releaseDate" onChange={this.onChange} value={this.state.releaseDate} required />
                     </div>
 
                     <div className="form-group">
-                        <label className="control-label">Duration</label>
+                        <label htmlFor="duration" className="control-label">Duration</label>
                         <input type="number" className="form-control" id="duration" data-name="duration" onChange={this.onChange} value={this.state.duration} required />
                     </div>
                     <br />

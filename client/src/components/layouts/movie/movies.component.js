@@ -9,6 +9,7 @@ const Movie = props => {
     return (
         <tr>
             <td className="ps-5">{props.movie.title}</td>
+            <td><img src={`../uploads/${props.movie.poster}`} className="rounded" alt="..."/></td>
             <td>{props.movie.story}</td>
             <td>{props.movie.genre.name}</td>
             <td>{props.movie.releaseDate}</td>
@@ -49,7 +50,7 @@ export default class Movies extends Component {
     }
 
     movies() {
-        return this.state.movie.map(currentMovie => {
+        return this.state.movie.map(currentMovie => {console.log(currentMovie);
             return <Movie movie={currentMovie} deleteMovie={this.deleteMovie} key={currentMovie._id} />
         });
     }
@@ -64,6 +65,7 @@ export default class Movies extends Component {
                     <thead>
                         <tr>
                             <th className="ps-5" scope="col">Title</th>
+                            <th scope="col">Poster</th>
                             <th scope="col">Story</th>
                             <th scope="col">Genre</th>
                             <th scope="col">Release Date</th>

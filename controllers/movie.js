@@ -14,7 +14,11 @@ exports.index = async (req, res, next) => {
 
 exports.add = async (req, res, next) => {
     try {
+        console.log(req.body);
+
         const movie = new Movie(req.body);
+
+        movie.poster = req.file.filename;
 
         movie.save();
 
