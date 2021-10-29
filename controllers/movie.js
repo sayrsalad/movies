@@ -1,23 +1,29 @@
 const Movie = require('../models/movie.model');
 
-exports.index = (req, res, next) => {
-    Movie.find()
-        .then(movie => res.json(movie))
-        .catch(err => res.status(400).json('Error: ' + err));
-}
+exports.index = async (req, res, next) => {
+    try {
+        const movie = await Movie.find();
+        res.status(200).json({
+            success: true,
+            movie
+        });
+    } catch (error) {
+        next(error);
+    }
+};
 
-exports.add = (req, res, next) => {
+exports.add = async (req, res, next) => {
     res.send("Add Movies");
-}
+};
 
-exports.update = (req, res, next) => {
+exports.update = async (req, res, next) => {
     res.send("Update Movies");
-}
+};
 
-exports.find = (req, res, next) => {
+exports.find = async (req, res, next) => {
     res.send("Find Movies");
-}
+};
 
-exports.remove = (req, res, next) => {
+exports.remove = async (req, res, next) => {
     res.send("Remove Movies");
-}
+};

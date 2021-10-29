@@ -1,19 +1,29 @@
-exports.index = (req, res, next) => {
-    res.send("Actors");
+const Actor = require('../models/actor.model');
+
+exports.index = async (req, res, next) => {
+    try {
+        const actor = await Actor.find();
+        res.status(200).json({
+            success: true,
+            actor
+        });
+    } catch (error) {
+        next(error);
+    }
 }
 
-exports.add = (req, res, next) => {
+exports.add = async (req, res, next) => {
     res.send("Add Actors");
 }
 
-exports.update = (req, res, next) => {
+exports.update = async (req, res, next) => {
     res.send("Update Actors");
 }
 
-exports.find = (req, res, next) => {
+exports.find = async (req, res, next) => {
     res.send("Find Actors");
 }
 
-exports.delete = (req, res, next) => {
-    res.send("Delete Actors");
+exports.remove = async (req, res, next) => {
+    res.send("Remove Actors");
 }
