@@ -8,7 +8,7 @@ router.route('/').get(index);
 
 router.route('/add').post(upload, add);
 
-router.route('/update/:id').post(update);
+router.route('/update/:id').post(upload, update);
 
 router.route('/:id').get(find);
 

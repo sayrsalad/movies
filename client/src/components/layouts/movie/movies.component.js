@@ -9,7 +9,7 @@ const Movie = props => {
     return (
         <tr>
             <td className="ps-5">{props.movie.title}</td>
-            <td><img src={`../uploads/${props.movie.poster}`} className="rounded" alt="..."/></td>
+            <td><img src={`../uploads/${props.movie.poster}`} className="rounded poster" alt="..."/></td>
             <td>{props.movie.story}</td>
             <td>{props.movie.genre.name}</td>
             <td>{props.movie.releaseDate}</td>

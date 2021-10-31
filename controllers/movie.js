@@ -37,9 +37,12 @@ exports.update = async (req, res, next) => {
         const movie = await Movie.findById(req.params.id);
 
         movie.title = req.body.title;
+        movie.poster = req.file.filename;
         movie.story = req.body.story;
         movie.releaseDate = req.body.releaseDate;
         movie.duration = req.body.duration;
+        movie.genre._id = req.body.genre._id;
+        movie.genre.name = req.body.genre.name;
 
         movie.save();
 

@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const upload = require('../utils/upload');
 
 const { index, add, update, find, remove } = require('../controllers/actor');
 

@@ -53,6 +53,11 @@ export default class CreateActor extends Component {
 						<input type="text" className="form-control" id="lastname" data-name="lastname" onChange={this.onChange} required />
 					</div>
 
+					<div className="mb-3">
+						<label htmlFor="profile" className="form-label">Profile</label>
+						<input className="form-control" filename="profile" type="file" id="profile" data-name="profile" onChange={this.onChange} required />
+					</div>
+
 					<div className="form-group">
 						<label className="control-label">Email</label>
 						<input type="email" className="form-control" id="email" data-name="email" onChange={this.onChange} required />

@@ -54,19 +54,19 @@ export default class CreateMovie extends Component {
 	onSubmit(e) {
 		e.preventDefault();
 
-		const formData = new FormData();
+		const movie = new FormData();
 
-		formData.append("title", this.state.title);
-		formData.append("poster", this.state.poster);
-		formData.append("story", this.state.story);
-		formData.append("releaseDate", this.state.releaseDate);
-		formData.append("duration", this.state.duration);
-		formData.append("genre[_id]", this.state.genre._id);
-		formData.append("genre[name]", this.state.genre.name);
+		movie.append("title", this.state.title);
+		movie.append("poster", this.state.poster);
+		movie.append("story", this.state.story);
+		movie.append("releaseDate", this.state.releaseDate);
+		movie.append("duration", this.state.duration);
+		movie.append("genre[_id]", this.state.genre._id);
+		movie.append("genre[name]", this.state.genre.name);
 
 		console.log(this.state.genre);
 
-		axios.post('http://localhost:5000/movie/add', formData)
+		axios.post('http://localhost:5000/movie/add', movie)
 			.then(res => window.location = "/movie")
 			.catch(err => console.log('Error: ' + err));
 
