@@ -64,8 +64,6 @@ export default class CreateMovie extends Component {
 		movie.append("genre[_id]", this.state.genre._id);
 		movie.append("genre[name]", this.state.genre.name);
 
-		console.log(this.state.genre);
-
 		axios.post('http://localhost:5000/movie/add', movie)
 			.then(res => window.location = "/movie")
 			.catch(err => console.log('Error: ' + err));
@@ -84,7 +82,7 @@ export default class CreateMovie extends Component {
 			<div className="container">
 				<h1>Create Movie</h1>
 
-				<form onSubmit={this.onSubmit} encType="multipart/form-data">
+				<form onSubmit={this.onSubmit}>
 					<div className="form-group">
 						<label htmlFor="title" className="control-label">Title</label>
 						<input type="text" className="form-control" id="title" data-name="title" onChange={this.onChange} required />

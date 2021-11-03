@@ -8,6 +8,7 @@ export default class CreateActor extends Component {
 		this.state = {
             firstname: '',
             lastname: '',
+			profile: '',
             email: ''
 		}
 
@@ -17,19 +18,24 @@ export default class CreateActor extends Component {
 
 	onChange(e) {
 		e.preventDefault();
-		this.setState({
-			[e.target.dataset.name] : e.target.value
-		})
+		this.setState((prevState) => {
+			if (e.target.dataset.name === "profile") {
+				prevState.profile = e.target.files[0];
+			} else {
+				prevState[e.target.dataset.name] = e.target.value;
+			}
+		});
 	}
 
 	onSubmit (e) {
 		e.preventDefault();
 
-		const actor = {
-			firstname: this.state.firstname,
-			lastname: this.state.lastname,
-			email: this.state.email
-		}
+		const actor = new FormData();
+
+		actor.append("firstname", this.state.firstname);
+		actor.append("lastname", this.state.lastname);
+		actor.append("profile", this.state.profile);
+		actor.append("email", this.state.email);
 
 		axios.post('http://localhost:5000/actor/add', actor)
 			.then(res => window.location = "/actor")

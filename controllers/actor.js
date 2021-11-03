@@ -16,6 +16,8 @@ exports.add = async (req, res, next) => {
     try {
         const actor = new Actor(req.body);
 
+        actor.profile = req.file.filename;
+
         actor.save();
 
         res.status(200).json({
@@ -32,6 +34,7 @@ exports.update = async (req, res, next) => {
     try {
         const actor = await Actor.findById(req.params.id);
 
+        actor.profile = req.file.filename;
         actor.firstname = req.body.firstname;
         actor.lastname = req.body.lastname;
         actor.email = req.body.email;

@@ -6,7 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const Actor = props => {
     return (
         <tr>
-            <td className="ps-5">{props.actor.firstname}</td>
+            <td className="ps-5"><img src={`../uploads/profile/${props.actor.profile}`} className="rounded poster" alt="..."/></td>
+            <td>{props.actor.firstname}</td>
             <td>{props.actor.lastname}</td>
             <td>{props.actor.email}</td>
             <td className="text-center fs-5">
@@ -59,7 +60,8 @@ export default class Actors extends Component {
                 <table className="table table-striped table-borderless table-dark rounded-3 overflow-hidden">
                     <thead>
                         <tr>
-                            <th className="ps-5" scope="col">First Name</th>
+                            <th className="ps-5" scope="col">Profile</th>
+                            <th scope="col">First Name</th>
                             <th scope="col">Last Name</th>
                             <th scope="col">Email</th>
                             <th scope="col" className="text-center">Actions</th>

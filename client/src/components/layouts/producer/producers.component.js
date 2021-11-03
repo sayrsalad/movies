@@ -37,7 +37,7 @@ export default class Producers extends Component {
 
     deleteProducer(id) {
         axios.delete('http://localhost:5000/producer/' + id)
-            .then(res => console.log(res.data.producer))
+            .then(res => console.log(res.data.message))
             .catch(err => console.log('Error: ' + err));
         this.setState({
             producer: this.state.producer.filter(el => el._id !== id)

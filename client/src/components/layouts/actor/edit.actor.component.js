@@ -8,6 +8,7 @@ export default class EditActor extends Component {
 		this.state = {
             firstname: '',
             lastname: '',
+			profile: '',
             email: ''
 		}
 
@@ -29,19 +30,24 @@ export default class EditActor extends Component {
 
 	onChange(e) {
 		e.preventDefault();
-		this.setState({
-			[e.target.dataset.name] : e.target.value
-		})
+		this.setState((prevState) => {
+			if (e.target.dataset.name === "profile") {
+				prevState.profile = e.target.files[0];
+			} else {
+				prevState[e.target.dataset.name] = e.target.value;
+			}
+		});
 	}
 
 	onSubmit (e) {
 		e.preventDefault();
 
-		const actor = {
-			firstname: this.state.firstname,
-			lastname: this.state.lastname,
-			email: this.state.email
-		}
+		const actor = new FormData();
+
+		actor.append("firstname", this.state.firstname);
+		actor.append("lastname", this.state.lastname);
+		actor.append("profile", this.state.profile);
+		actor.append("email", this.state.email);
 
 		axios.post('http://localhost:5000/actor/update/'+ this.props.match.params.id, actor)
 			.then(res => window.location = "/actor")
@@ -57,17 +63,22 @@ export default class EditActor extends Component {
 				<form onSubmit={this.onSubmit}>
 					<div className="form-group">
 						<label className="control-label">First Name</label>
-						<input type="text" className="form-control" id="firstname" data-name="firstname" onChange={this.onChange} value={this.state.firstname} required />
+						<input type="text" className="form-control" id="firstname" data-name="firstname" onChange={this.onChange} defaultValue={this.state.firstname} required />
 					</div>
 
 					<div className="form-group">
 						<label className="control-label">Last Name</label>
-						<input type="text" className="form-control" id="lastname" data-name="lastname" onChange={this.onChange} value={this.state.lastname} required />
+						<input type="text" className="form-control" id="lastname" data-name="lastname" onChange={this.onChange} defaultValue={this.state.lastname} required />
+					</div>
+
+					<div className="mb-3">
+						<label htmlFor="profile" className="form-label">Profile</label>
+						<input className="form-control" filename="profile" type="file" id="profile" data-name="profile" onChange={this.onChange} required />
 					</div>
 
 					<div className="form-group">
 						<label className="control-label">Email</label>
-						<input type="email" className="form-control" id="email" data-name="email" onChange={this.onChange} value={this.state.email} required />
+						<input type="email" className="form-control" id="email" data-name="email" onChange={this.onChange} defaultValue={this.state.email} required />
 					</div>
 
 					<br/>
