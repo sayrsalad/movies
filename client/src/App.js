@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import 'bootstrap';
@@ -26,28 +26,42 @@ import EditProducer from './components/layouts/producer/edit.producer.component'
 
 library.add(fas);
 
-function App() {
+const App = () => {
   return (
     <Router>
-      <Navbar/>
-      <br/>
-      <Route path="/login" exact component={Login}/>
+      <div className="app">
 
-      <Route path="/movie" exact component={Movies}/>
-      <Route path="/movie/create" component={CreateMovie}/>
-      <Route path="/movie/edit/:id" component={EditMovie}/>
+        <Navbar />
+        <br />
+        <Switch>
+          <Route path="/login" exact component={Login} />
+        </Switch>
 
-      <Route path="/actor" exact component={Actors}/>
-      <Route path="/actor/create" component={CreateActor}/>
-      <Route path="/actor/edit/:id" component={EditActor}/>
+        <Switch>
+          <Route path="/movie" exact component={Movies} />
+          <Route path="/movie/create" component={CreateMovie} />
+          <Route path="/movie/edit/:id" component={EditMovie} />
+        </Switch>
 
-      <Route path="/genre" exact component={Genres}/>
-      <Route path="/genre/create" component={CreateGenre}/>
-      <Route path="/genre/edit/:id" component={EditGenre}/>
-      
-      <Route path="/producer" exact component={Producers}/>
-      <Route path="/producer/create" component={CreateProducer}/>
-      <Route path="/producer/edit/:id" component={EditProducer}/>
+        <Switch>
+          <Route path="/actor" exact component={Actors} />
+          <Route path="/actor/create" component={CreateActor} />
+          <Route path="/actor/edit/:id" component={EditActor} />
+        </Switch>
+
+        <Switch>
+          <Route path="/genre" exact component={Genres} />
+          <Route path="/genre/create" component={CreateGenre} />
+          <Route path="/genre/edit/:id" component={EditGenre} />
+        </Switch>
+
+        <Switch>
+          <Route path="/producer" exact component={Producers} />
+          <Route path="/producer/create" component={CreateProducer} />
+          <Route path="/producer/edit/:id" component={EditProducer} />
+        </Switch>
+
+      </div>
 
     </Router>
   );

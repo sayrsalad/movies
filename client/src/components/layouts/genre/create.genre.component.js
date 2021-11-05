@@ -27,7 +27,7 @@ export default class CreateGenre extends Component {
 			name: this.state.name
 		}
 
-		axios.post('http://localhost:5000/genre/add', genre)
+		axios.post('http://localhost:5000/api/genre/add', genre)
 			.then(res => window.location = "/genre")
 			.catch(err => console.log('Error: '+ err));
 	}

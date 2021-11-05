@@ -14,7 +14,7 @@ export default class EditGenre extends Component {
 	}
 
     componentDidMount() {
-        axios.get('http://localhost:5000/genre/' + this.props.match.params.id)
+        axios.get('http://localhost:5000/api/genre/' + this.props.match.params.id)
             .then(result => {
                 this.setState({
                     name: result.data.genre.name
@@ -37,7 +37,7 @@ export default class EditGenre extends Component {
 			name: this.state.name
 		}
 
-		axios.post('http://localhost:5000/genre/update/'+ this.props.match.params.id, genre)
+		axios.post('http://localhost:5000/api/genre/update/'+ this.props.match.params.id, genre)
 			.then(res => window.location = "/genre")
 			.catch(err => console.log('Error: '+ err));
 	}

@@ -31,7 +31,7 @@ export default class CreateProducer extends Component {
 			website: this.state.website
 		}
 
-		axios.post('http://localhost:5000/producer/add', producer)
+		axios.post('http://localhost:5000/api/producer/add', producer)
 			.then(res => window.location = "/producer")
 			.catch(err => console.log('Error: '+ err));
 	}

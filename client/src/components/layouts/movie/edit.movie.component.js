@@ -30,8 +30,8 @@ export default class EditMovie extends Component {
     }
 
     componentDidMount() {
-        const movie = 'http://localhost:5000/movie/' + this.props.match.params.id;
-        const genres = 'http://localhost:5000/genre';
+        const movie = 'http://localhost:5000/api/movie/' + this.props.match.params.id;
+        const genres = 'http://localhost:5000/api/genre';
 
         const movieReq = axios.get(movie);
         const genresReq = axios.get(genres);
@@ -90,7 +90,7 @@ export default class EditMovie extends Component {
 		movie.append("genre[_id]", this.state.genre._id);
 		movie.append("genre[name]", this.state.genre.name);
 
-        axios.post('http://localhost:5000/movie/update/' + this.props.match.params.id, movie)
+        axios.post('http://localhost:5000/api/movie/update/' + this.props.match.params.id, movie)
             .then(res => window.location = "/movie")
             .catch(err => console.log('Error: ' + err));
     }

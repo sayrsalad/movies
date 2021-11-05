@@ -37,7 +37,7 @@ export default class CreateActor extends Component {
 		actor.append("profile", this.state.profile);
 		actor.append("email", this.state.email);
 
-		axios.post('http://localhost:5000/actor/add', actor)
+		axios.post('http://localhost:5000/api/actor/add', actor)
 			.then(res => window.location = "/actor")
 			.catch(err => console.log('Error: '+ err));
 	}

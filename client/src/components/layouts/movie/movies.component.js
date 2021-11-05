@@ -32,7 +32,7 @@ export default class Movies extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/movie')
+        axios.get('http://localhost:5000/api/movie')
             .then(res => {
                 this.setState({ movie: res.data.movie })
             })
@@ -41,7 +41,7 @@ export default class Movies extends Component {
     }
 
     deleteMovie(id) {
-        axios.delete('http://localhost:5000/movie/' + id)
+        axios.delete('http://localhost:5000/api/movie/' + id)
             .then(res => console.log(res.data.message))
             .catch(err => console.log('Error: ' + err));
         this.setState({

@@ -16,7 +16,7 @@ export default class EditProducer extends Component {
 	}
 
     componentDidMount() {
-        axios.get('http://localhost:5000/producer/' + this.props.match.params.id)
+        axios.get('http://localhost:5000/api/producer/' + this.props.match.params.id)
             .then(result => {
                 this.setState({
                     name: result.data.producer.name,
@@ -43,7 +43,7 @@ export default class EditProducer extends Component {
 			website: this.state.website
 		}
 
-		axios.post('http://localhost:5000/producer/update/'+ this.props.match.params.id, producer)
+		axios.post('http://localhost:5000/api/producer/update/'+ this.props.match.params.id, producer)
 			.then(res => window.location = "/producer")
 			.catch(err => console.log('Error: '+ err));
 	}

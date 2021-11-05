@@ -17,7 +17,7 @@ export default class EditActor extends Component {
 	}
 
     componentDidMount() {
-        axios.get('http://localhost:5000/actor/' + this.props.match.params.id)
+        axios.get('http://localhost:5000/api/actor/' + this.props.match.params.id)
             .then(result => {
                 this.setState({
                     firstname: result.data.actor.firstname,
@@ -49,7 +49,7 @@ export default class EditActor extends Component {
 		actor.append("profile", this.state.profile);
 		actor.append("email", this.state.email);
 
-		axios.post('http://localhost:5000/actor/update/'+ this.props.match.params.id, actor)
+		axios.post('http://localhost:5000/api/actor/update/'+ this.props.match.params.id, actor)
 			.then(res => window.location = "/actor")
 			.catch(err => console.log('Error: '+ err));
 	}

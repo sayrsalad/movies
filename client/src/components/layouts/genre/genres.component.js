@@ -25,7 +25,7 @@ export default class Genres extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/genre')
+        axios.get('http://localhost:5000/api/genre')
             .then(res => {
                 this.setState({ genre: res.data.genre })
             })
@@ -33,7 +33,7 @@ export default class Genres extends Component {
     }
 
     deleteGenre(id) {
-        axios.delete('http://localhost:5000/genre/' + id)
+        axios.delete('http://localhost:5000/api/genre/' + id)
             .then(res => console.log(res.data.message))
             .catch(err => console.log('Error: ' + err));
         this.setState({

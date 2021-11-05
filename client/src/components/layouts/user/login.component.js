@@ -1,48 +1,98 @@
-import React, { Component } from 'react';
-// import { Link } from "react-router-dom";
-// import axios from 'axios';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import "../../../assets/css/LoginLayout.css";
+import image1 from '../../../assets/images/image1.jpg';
 
-export default class Genres extends Component {
+const LoginScreen = ({ history }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-    render() {
+  useEffect(() => {
+    if (localStorage.getItem("authToken")) {
+      history.push("/");
+    }
+  }, [history]);
 
-        return (
-            <div className="container">
-            <div className="card login-card">
-              <div className="row no-gutters">
-                <div className="col-md-5">
-                  <img src="assets/images/login.jpg" alt="login" className="login-card-img"/>
+  const loginHandler = async (e) => {
+    e.preventDefault();
+
+    const config = {
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    try {
+      const { data } = await axios.post(
+        "/api/auth/login",
+        { email, password },
+        config
+      );
+
+      localStorage.setItem("authToken", data.token);
+
+      history.push("/");
+    } catch (error) {
+      setError(error.response.data.error);
+      setTimeout(() => {
+        setError("");
+      }, 5000);
+    }
+  };
+
+  return (
+    <section className="vh-90">
+      <div className="container py-1 h-75">
+        <div className="row d-flex justify-content-center align-items-center h-75">
+          <div className="col col-xl-10">
+            <div className="card rounded-3 shadow-lg border-0">
+              <div className="row g-0">
+                <div className="col-md-6 col-lg-5 d-none d-md-block">
+                  <img
+                    src={image1}
+                    alt="login form"
+                    className="img-fluid rounded-3" />
                 </div>
-                <div className="col-md-7">
-                  <div className="card-body">
-                    <div className="brand-wrapper">
-                      <img src="assets/images/logo.svg" alt="logo" className="logo"/>
-                    </div>
-                    <p className="login-card-description">Sign into your account</p>
-                    <form action="#!">
-                        <div className="form-group">
-                          <label className="sr-only">Email</label>
-                          <input type="email" name="email" id="email" className="form-control" placeholder="Email address"/>
-                        </div>
-                        <div className="form-group mb-4">
-                          <label className="sr-only">Password</label>
-                          <input type="password" name="password" id="password" className="form-control" placeholder="***********"/>
-                        </div>
-                        <input name="login" id="login" className="btn btn-block login-btn mb-4" type="button" value="Login"/>
-                      </form>
-                      <a href="#!" className="forgot-password-link">Forgot password?</a>
-                      <p className="login-card-footer-text">Don't have an account? <a href="#!" className="text-reset">Register here</a></p>
-                      <nav className="login-card-footer-nav">
-                        <a href="#!">Terms of use.</a>
-                        <a href="#!">Privacy policy</a>
-                      </nav>
+                <div className="col-md-6 col-lg-7 d-flex align-items-center">
+                  <div className="card-body p-4 p-lg-5 text-black ">
+                    <form>
+                      <div className="d-flex align-items-center mb-3 pb-1">
+                        <i className="fas fa-cubes fa-2x me-3"></i>
+                        <span className="h1 fw-bold mb-0">Logo</span>
+                      </div>
+
+                      <h5 className="fw-normal mb-3 pb-3">Sign into your account</h5>
+
+                      <div className="form-outline mb-4">
+                        <input type="email" id="email" className="form-control form-control-lg" />
+                        <label className="form-label" htmlFor="email">Email address</label>
+                      </div>
+
+                      <div className="form-outline mb-4">
+                        <input type="password" id="password" className="form-control form-control-lg" />
+                        <label className="form-label" htmlFor="password">Password</label>
+                      </div>
+
+                      <div className="pt-1 mb-4">
+                        <button className="btn btn-dark btn-lg btn-block" type="button">Login</button>
+                      </div>
+
+                      <a className="small text-muted" href="#!">Forgot password?</a>
+                      <p className="mb-5 pb-lg-2">Don't have an account? <a href="#!">Register here</a></p>
+                      <a href="#!" className="small text-muted">Terms of use.</a>
+                      <a href="#!" className="small text-muted">Privacy policy</a>
+                    </form>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        )
+        </div>
+      </div>
+    </section>
+  );
+};
 
-    }
-}
+export default LoginScreen;

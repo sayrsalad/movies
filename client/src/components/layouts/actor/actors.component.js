@@ -28,7 +28,7 @@ export default class Actors extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/actor')
+        axios.get('http://localhost:5000/api/actor')
             .then(res => {
                 this.setState({ actor: res.data.actor })
             })
@@ -37,8 +37,8 @@ export default class Actors extends Component {
     }
 
     deleteActor(id) {
-        axios.delete('http://localhost:5000/actor/' + id)
-            .then(res => console.log(res.data.actor))
+        axios.delete('http://localhost:5000/api/actor/' + id)
+            .then(res => console.log(res.data.message))
             .catch(err => console.log('Error: ' + err));
         this.setState({
             actor: this.state.actor.filter(el => el._id !== id)

@@ -30,7 +30,7 @@ export default class CreateMovie extends Component {
 	}
 
 	componentDidMount() {
-		axios.get('http://localhost:5000/genre')
+		axios.get('http://localhost:5000/api/genre')
 			.then(res => {
 				this.setState({ genreA: res.data.genre })
 			})
@@ -64,7 +64,7 @@ export default class CreateMovie extends Component {
 		movie.append("genre[_id]", this.state.genre._id);
 		movie.append("genre[name]", this.state.genre.name);
 
-		axios.post('http://localhost:5000/movie/add', movie)
+		axios.post('http://localhost:5000/api/movie/add', movie)
 			.then(res => window.location = "/movie")
 			.catch(err => console.log('Error: ' + err));
 
