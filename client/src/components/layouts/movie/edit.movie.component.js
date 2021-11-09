@@ -24,6 +24,13 @@ export default class EditMovie extends Component {
             }
         }
 
+        this.config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            },
+        };
+
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.genres = this.genres.bind(this);
@@ -33,8 +40,8 @@ export default class EditMovie extends Component {
         const movie = 'http://localhost:5000/api/movie/' + this.props.match.params.id;
         const genres = 'http://localhost:5000/api/genre';
 
-        const movieReq = axios.get(movie);
-        const genresReq = axios.get(genres);
+        const movieReq = axios.get(movie, this.config);
+        const genresReq = axios.get(genres, this.config);
 
         axios.all([movieReq, genresReq])
             .then(axios.spread((...res) => {
@@ -90,7 +97,7 @@ export default class EditMovie extends Component {
 		movie.append("genre[_id]", this.state.genre._id);
 		movie.append("genre[name]", this.state.genre.name);
 
-        axios.post('http://localhost:5000/api/movie/update/' + this.props.match.params.id, movie)
+        axios.post('http://localhost:5000/api/movie/update/' + this.props.match.params.id, movie, this.config)
             .then(res => window.location = "/movie")
             .catch(err => console.log('Error: ' + err));
     }

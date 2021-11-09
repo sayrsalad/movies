@@ -2,3 +2,15 @@
     height: auto;
     width: 200px;
 }
+
+*{
+    font-family: 'Roboto', sans-serif;
+}
+
+.thumb-post {
+
+    object-position: center; /* Center the image within the element */
+    width: 100%;
+    max-height: auto;
+    margin-bottom: 1rem;
+  }

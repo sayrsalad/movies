@@ -24,13 +24,20 @@ export default class CreateMovie extends Component {
 			}
 		}
 
+		this.config = {
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+			},
+		};
+
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 		this.genres = this.genres.bind(this);
 	}
 
 	componentDidMount() {
-		axios.get('http://localhost:5000/api/genre')
+		axios.get('http://localhost:5000/api/genre', this.config)
 			.then(res => {
 				this.setState({ genreA: res.data.genre })
 			})
@@ -64,7 +71,7 @@ export default class CreateMovie extends Component {
 		movie.append("genre[_id]", this.state.genre._id);
 		movie.append("genre[name]", this.state.genre.name);
 
-		axios.post('http://localhost:5000/api/movie/add', movie)
+		axios.post('http://localhost:5000/api/movie/add', movie, this.config)
 			.then(res => window.location = "/movie")
 			.catch(err => console.log('Error: ' + err));
 

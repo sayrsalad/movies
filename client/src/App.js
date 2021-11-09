@@ -4,9 +4,14 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 
+import PrivateRoute from './components/routing/PrivateRoute';
+
 import Navbar from './components/layouts/navbar.component';
 
+import Home from './components/layouts/home.component';
+
 import Login from './components/layouts/user/login.component';
+import Register from './components/layouts/user/register.component';
 
 import Movies from './components/layouts/movie/movies.component';
 import CreateMovie from './components/layouts/movie/create.movie.component';
@@ -27,44 +32,40 @@ import EditProducer from './components/layouts/producer/edit.producer.component'
 library.add(fas);
 
 const App = () => {
-  return (
-    <Router>
-      <div className="app">
+	return (
+		<Router>
+			<div className="app">
+				<Switch>
+					<Route path="/login" exact component={Login} />
+					<Route path="/register" exact component={Register} />
 
-        <Navbar />
-        <br />
-        <Switch>
-          <Route path="/login" exact component={Login} />
-        </Switch>
+					<Navbar />
+				</Switch>
+				<div>
 
-        <Switch>
-          <Route path="/movie" exact component={Movies} />
-          <Route path="/movie/create" component={CreateMovie} />
-          <Route path="/movie/edit/:id" component={EditMovie} />
-        </Switch>
+					<br />
+					<PrivateRoute path="/" component={Home} />
 
-        <Switch>
-          <Route path="/actor" exact component={Actors} />
-          <Route path="/actor/create" component={CreateActor} />
-          <Route path="/actor/edit/:id" component={EditActor} />
-        </Switch>
+					<PrivateRoute path="/movie" exact component={Movies} />
+					<PrivateRoute path="/movie/create" component={CreateMovie} />
+					<PrivateRoute path="/movie/edit/:id" component={EditMovie} />
 
-        <Switch>
-          <Route path="/genre" exact component={Genres} />
-          <Route path="/genre/create" component={CreateGenre} />
-          <Route path="/genre/edit/:id" component={EditGenre} />
-        </Switch>
+					<PrivateRoute path="/actor" exact component={Actors} />
+					<PrivateRoute path="/actor/create" component={CreateActor} />
+					<PrivateRoute path="/actor/edit/:id" component={EditActor} />
 
-        <Switch>
-          <Route path="/producer" exact component={Producers} />
-          <Route path="/producer/create" component={CreateProducer} />
-          <Route path="/producer/edit/:id" component={EditProducer} />
-        </Switch>
+					<PrivateRoute path="/genre" exact component={Genres} />
+					<PrivateRoute path="/genre/create" component={CreateGenre} />
+					<PrivateRoute path="/genre/edit/:id" component={EditGenre} />
 
-      </div>
+					<PrivateRoute path="/producer" exact component={Producers} />
+					<PrivateRoute path="/producer/create" component={CreateProducer} />
+					<PrivateRoute path="/producer/edit/:id" component={EditProducer} />
+				</div>
+			</div>
 
-    </Router>
-  );
+		</Router>
+	);
 }
 
 export default App;

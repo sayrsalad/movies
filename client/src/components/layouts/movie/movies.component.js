@@ -29,10 +29,17 @@ export default class Movies extends Component {
         this.state = { movie: [] }
 
         this.deleteMovie = this.deleteMovie.bind(this);
+
+        this.config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            },
+        };
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/api/movie')
+        axios.get('http://localhost:5000/api/movie', this.config)
             .then(res => {
                 this.setState({ movie: res.data.movie })
             })
@@ -41,7 +48,7 @@ export default class Movies extends Component {
     }
 
     deleteMovie(id) {
-        axios.delete('http://localhost:5000/api/movie/' + id)
+        axios.delete('http://localhost:5000/api/movie/' + id, this.config)
             .then(res => console.log(res.data.message))
             .catch(err => console.log('Error: ' + err));
         this.setState({
