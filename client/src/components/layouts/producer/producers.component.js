@@ -24,10 +24,17 @@ export default class Producers extends Component {
         this.state = { producer: [] }
 
         this.deleteProducer = this.deleteProducer.bind(this);
+
+        this.config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            },
+        };
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/api/producer')
+        axios.get('http://localhost:5000/api/producer', this.config)
             .then(res => {
                 this.setState({ producer: res.data.producer })
             })
@@ -36,7 +43,7 @@ export default class Producers extends Component {
     }
 
     deleteProducer(id) {
-        axios.delete('http://localhost:5000/api/producer/' + id)
+        axios.delete('http://localhost:5000/api/producer/' + id, this.config)
             .then(res => console.log(res.data.message))
             .catch(err => console.log('Error: ' + err));
         this.setState({

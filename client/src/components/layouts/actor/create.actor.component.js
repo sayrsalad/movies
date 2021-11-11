@@ -12,6 +12,13 @@ export default class CreateActor extends Component {
             email: ''
 		}
 
+		this.config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            },
+        };
+
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 	}
@@ -37,7 +44,7 @@ export default class CreateActor extends Component {
 		actor.append("profile", this.state.profile);
 		actor.append("email", this.state.email);
 
-		axios.post('http://localhost:5000/api/actor/add', actor)
+		axios.post('http://localhost:5000/api/actor/add', actor, this.config)
 			.then(res => window.location = "/actor")
 			.catch(err => console.log('Error: '+ err));
 	}

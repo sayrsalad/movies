@@ -8,7 +8,7 @@ export default class Movies extends Component {
 
         return (
             <div className="container">
-
+                Home
             </div>
         )
 

@@ -41,10 +41,11 @@ const App = () => {
 
 					<Navbar />
 				</Switch>
-				<div>
+
+				<div className="home-section">
 
 					<br />
-					<PrivateRoute path="/" component={Home} />
+					<PrivateRoute path="/" exact component={Home} />
 
 					<PrivateRoute path="/movie" exact component={Movies} />
 					<PrivateRoute path="/movie/create" component={CreateMovie} />
@@ -62,6 +63,8 @@ const App = () => {
 					<PrivateRoute path="/producer/create" component={CreateProducer} />
 					<PrivateRoute path="/producer/edit/:id" component={EditProducer} />
 				</div>
+
+
 			</div>
 
 		</Router>

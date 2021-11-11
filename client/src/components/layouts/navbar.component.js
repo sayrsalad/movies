@@ -1,14 +1,26 @@
+/* eslint-disable no-unused-vars */
 import React, { Component } from "react";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import '../../assets/css/Sidebar.css';
 import empty_profile from '../../assets/images/empty_profile.png';
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 
-const Navbar = ({ history }) => {
+const Navbar = ({ props, history }) => {
 
 	const [sidebar, setSidebar] = useState("");
+	const [dropdown, setDropdown] = useState("");
+
+	const parseJwt = (token) => {
+		var base64Url = token.split('.')[1];
+		var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+		var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+			return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+		}).join(''));
+
+		return JSON.parse(jsonPayload);
+	};
 
 	const logoutHandler = () => {
 		localStorage.removeItem("authToken");
@@ -27,32 +39,84 @@ const Navbar = ({ history }) => {
 		setSidebar(false);
 	}
 
+	const toggleDropdown = () => {
+		setDropdown(!dropdown);
+	}
+
+	useEffect(() => {
+		try {
+			const { exp } = parseJwt(localStorage.getItem("authToken"));
+			const expirationTime = (exp * 1000) - 60000;
+
+			if (Date.now() > expirationTime) {
+				logoutHandler();
+			}
+
+		} catch (error) {
+			console.log(error);
+		}
+
+	});
+
 	return (
 		<>
 
 			{/* onMouseEnter={sidebarOpen} onMouseLeave={sidebarClose} */}
 			<div className={sidebar === true ? "sidebar h-100 close" : "sidebar h-100"}>
-				<div className="logo-details">
-					<FontAwesomeIcon icon="user" className="text-white" />
-					<span className="logo_name">CodingLab</span>
-				</div>
+				<Link to="/" className="text-decoration-none text-white">
+					<div className="logo-details">
+						<FontAwesomeIcon icon="ticket-alt" className="text-white" />
+						<span className="logo_name fs-5">Cinema</span>
+					</div>
+				</Link>
 				<ul className="nav-links">
 					<li>
-						<a href="/#">
-							<i className='bx bx-grid-alt' ></i>
-							<span className="link_name">Dashboard</span>
-						</a>
+						<Link to="/movie">
+							<FontAwesomeIcon icon="film" className="text-white" />
+							<span className="link_name fs-6">Movie</span>
+						</Link>
 						<ul className="sub-menu blank">
-							<li><a className="link_name" href="/#">Category</a></li>
+							<li><Link to="/movie" className="link_name">Movies</Link></li>
 						</ul>
 					</li>
+
 					<li>
+						<Link to="/actor">
+							<FontAwesomeIcon icon="theater-masks" className="text-white" />
+							<span className="link_name fs-6">Actors</span>
+						</Link>
+						<ul className="sub-menu blank">
+							<li><Link to="/actor" className="link_name">Actors</Link></li>
+						</ul>
+					</li>
+
+					<li>
+						<Link to="/genre">
+							<FontAwesomeIcon icon="feather-alt" className="text-white" />
+							<span className="link_name fs-6">Genres</span>
+						</Link>
+						<ul className="sub-menu blank">
+							<li><Link to="/genre" className="link_name">Genres</Link></li>
+						</ul>
+					</li>
+
+					<li>
+						<Link to="/producer">
+							<FontAwesomeIcon icon="bullhorn" className="text-white" />
+							<span className="link_name fs-6">Producers</span>
+						</Link>
+						<ul className="sub-menu blank">
+							<li><Link to="/producer" className="link_name">Genres</Link></li>
+						</ul>
+					</li>
+
+					{/* <li className={dropdown === true ? "showMenu" : ""}>
 						<div className="iocn-link">
 							<a href="/#">
 								<i className='bx bx-collection' ></i>
 								<span className="link_name">Category</span>
 							</a>
-							<FontAwesomeIcon icon="caret-down" className="text-white arrow"/>
+							<FontAwesomeIcon icon="caret-down" className="text-white arrow" onClick={toggleDropdown} />
 						</div>
 						<ul className="sub-menu">
 							<li><a className="link_name" href="/#">Category</a></li>
@@ -60,82 +124,8 @@ const Navbar = ({ history }) => {
 							<li><a href="/#">JavaScript</a></li>
 							<li><a href="/#">PHP MySQL</a></li>
 						</ul>
-					</li>
-					<li>
-						<div className="iocn-link">
-							<a href="/#">
-								<i className='bx bx-book-alt' ></i>
-								<span className="link_name">Posts</span>
-							</a>
-							<FontAwesomeIcon icon="caret-down" className="text-white arrow"/>
-						</div>
-						<ul className="sub-menu">
-							<li><a className="link_name" href="/#">Posts</a></li>
-							<li><a href="/#">Web Design</a></li>
-							<li><a href="/#">Login Form</a></li>
-							<li><a href="/#">Card Design</a></li>
-						</ul>
-					</li>
-					<li>
-						<a href="/#">
-							<i className='bx bx-pie-chart-alt-2' ></i>
-							<span className="link_name">Analytics</span>
-						</a>
-						<ul className="sub-menu blank">
-							<li><a className="link_name" href="/#">Analytics</a></li>
-						</ul>
-					</li>
-					<li>
-						<a href="/#">
-							<i className='bx bx-line-chart' ></i>
-							<span className="link_name">Chart</span>
-						</a>
-						<ul className="sub-menu blank">
-							<li><a className="link_name" href="/#">Chart</a></li>
-						</ul>
-					</li>
-					<li>
-						<div className="iocn-link">
-							<a href="/#">
-								<i className='bx bx-plug' ></i>
-								<span className="link_name">Plugins</span>
-							</a>
-							<FontAwesomeIcon icon="caret-down" className="text-white arrow"/>
-						</div>
-						<ul className="sub-menu">
-							<li><a className="link_name" href="/#">Plugins</a></li>
-							<li><a href="/#">UI Face</a></li>
-							<li><a href="/#">Pigments</a></li>
-							<li><a href="/#">Box Icons</a></li>
-						</ul>
-					</li>
-					<li>
-						<a href="/#">
-							<i className='bx bx-compass' ></i>
-							<span className="link_name">Explore</span>
-						</a>
-						<ul className="sub-menu blank">
-							<li><a className="link_name" href="/#">Explore</a></li>
-						</ul>
-					</li>
-					<li>
-						<a href="/#">
-							<i className='bx bx-history'></i>
-							<span className="link_name">History</span>
-						</a>
-						<ul className="sub-menu blank">
-							<li><a className="link_name" href="/#">History</a></li>
-						</ul>
-					</li>
-					<li>
-						<a href="/#">
-							<i className='bx bx-cog' ></i>
-							<span className="link_name">Setting</span>
-						</a>
-						<ul className="sub-menu blank">
-							<li><a className="link_name" href="/#">Setting</a></li>
-						</ul>
-					</li>
+					</li> */}
+
 					{/* <li>
 						<div className="profile-details">
 							<div className="profile-content">
@@ -143,25 +133,25 @@ const Navbar = ({ history }) => {
 							</div>
 							<div className="name-job">
 								<div className="profile_name">Prem Shahi</div>
-								<div claclassNamess="job">Web Desginer</div>
+								<div className="job">Web Desginer</div>
 							</div>
 							<i className='bx bx-log-out' ></i>
 						</div>
 					</li> */}
 				</ul>
 			</div>
-			<section className="home-section">
-				<nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+
+				<nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top home-section topbar">
 					<div className="container-fluid">
-						<FontAwesomeIcon icon="user" onClick={sidebarToggle} className="text-white" />
-						<a className="navbar-brand fw-bold" href="/#">Movies</a>
+						<FontAwesomeIcon icon="bars" onClick={sidebarToggle} className="sidebar-toggler" size="2x" />
+						{/* <a className="navbar-brand fw-bold" href="/#">Movies</a> */}
 						<button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 							<span className="navbar-toggler-icon"></span>
 						</button>
 						<div className="collapse navbar-collapse" id="navbarSupportedContent">
 							<form className="d-flex ms-auto">
 								{/* <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                <button className="btn btn-outline-success" type="submit">Search</button> */}
+								<button className="btn btn-outline-success" type="submit">Search</button> */}
 							</form>
 							<ul className="navbar-nav mb-2 mb-lg-0">
 								<li className="nav-item dropdown">
@@ -180,7 +170,7 @@ const Navbar = ({ history }) => {
 					</div>
 				</nav>
 
-			</section>
+
 		</>
 		// <nav className="navbar navbar-expand-md navbar-dark bg-dark">
 		//     <div className="container-fluid">

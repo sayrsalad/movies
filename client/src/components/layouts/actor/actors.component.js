@@ -25,10 +25,17 @@ export default class Actors extends Component {
         this.state = { actor: [] }
 
         this.deleteActor = this.deleteActor.bind(this);
+
+        this.config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            },
+        };
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/api/actor')
+        axios.get('http://localhost:5000/api/actor', this.config)
             .then(res => {
                 this.setState({ actor: res.data.actor })
             })
@@ -37,7 +44,7 @@ export default class Actors extends Component {
     }
 
     deleteActor(id) {
-        axios.delete('http://localhost:5000/api/actor/' + id)
+        axios.delete('http://localhost:5000/api/actor/' + id, this.config)
             .then(res => console.log(res.data.message))
             .catch(err => console.log('Error: ' + err));
         this.setState({

@@ -9,12 +9,19 @@ export default class EditGenre extends Component {
             name: ''
 		}
 
+		this.config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            },
+        };
+
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 	}
 
     componentDidMount() {
-        axios.get('http://localhost:5000/api/genre/' + this.props.match.params.id)
+        axios.get('http://localhost:5000/api/genre/' + this.props.match.params.id, this.config)
             .then(result => {
                 this.setState({
                     name: result.data.genre.name
@@ -37,7 +44,7 @@ export default class EditGenre extends Component {
 			name: this.state.name
 		}
 
-		axios.post('http://localhost:5000/api/genre/update/'+ this.props.match.params.id, genre)
+		axios.post('http://localhost:5000/api/genre/update/'+ this.props.match.params.id, genre, this.config)
 			.then(res => window.location = "/genre")
 			.catch(err => console.log('Error: '+ err));
 	}

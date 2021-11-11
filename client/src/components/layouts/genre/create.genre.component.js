@@ -9,6 +9,13 @@ export default class CreateGenre extends Component {
             name: ''
 		}
 
+		this.config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            },
+        };
+
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 	}
@@ -27,7 +34,7 @@ export default class CreateGenre extends Component {
 			name: this.state.name
 		}
 
-		axios.post('http://localhost:5000/api/genre/add', genre)
+		axios.post('http://localhost:5000/api/genre/add', genre, this.config)
 			.then(res => window.location = "/genre")
 			.catch(err => console.log('Error: '+ err));
 	}

@@ -11,6 +11,13 @@ export default class CreateProducer extends Component {
             website: ''
 		}
 
+		this.config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            },
+        };
+
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 	}
@@ -31,7 +38,7 @@ export default class CreateProducer extends Component {
 			website: this.state.website
 		}
 
-		axios.post('http://localhost:5000/api/producer/add', producer)
+		axios.post('http://localhost:5000/api/producer/add', producer, this.config)
 			.then(res => window.location = "/producer")
 			.catch(err => console.log('Error: '+ err));
 	}

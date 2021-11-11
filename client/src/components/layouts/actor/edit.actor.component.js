@@ -12,12 +12,19 @@ export default class EditActor extends Component {
             email: ''
 		}
 
+		this.config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            },
+        };
+
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 	}
 
     componentDidMount() {
-        axios.get('http://localhost:5000/api/actor/' + this.props.match.params.id)
+        axios.get('http://localhost:5000/api/actor/' + this.props.match.params.id, this.config)
             .then(result => {
                 this.setState({
                     firstname: result.data.actor.firstname,
@@ -49,7 +56,7 @@ export default class EditActor extends Component {
 		actor.append("profile", this.state.profile);
 		actor.append("email", this.state.email);
 
-		axios.post('http://localhost:5000/api/actor/update/'+ this.props.match.params.id, actor)
+		axios.post('http://localhost:5000/api/actor/update/'+ this.props.match.params.id, actor, this.config)
 			.then(res => window.location = "/actor")
 			.catch(err => console.log('Error: '+ err));
 	}

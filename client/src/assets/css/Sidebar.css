@@ -1,3 +1,7 @@
+.sidebar-toggler{
+  cursor: pointer;
+}
+
 .sidebar{
   position: fixed;
   top: 0;
@@ -60,20 +64,29 @@
   align-items: center;
   justify-content: space-between;
 }
+
 .sidebar.close .nav-links li .iocn-link{
   display: block
 }
-.sidebar .nav-links li i,
+
 .sidebar .nav-links li svg{
   height: 50px;
-  min-width: 78px;
+  min-width: 30px;
   text-align: center;
   line-height: 50px;
   color: #fff;
   font-size: 20px;
   cursor: pointer;
   transition: all 0.3s ease;
+  margin: 0 20px 0 22px;
 }
+
+path{
+  height: 10px;
+  width: 10px;
+  font-size: 20px;
+}
+
 .sidebar .nav-links li.showMenu svg.arrow{
   transform: rotate(-180deg);
 }
@@ -206,6 +219,11 @@
   width: calc(100% - 260px);
   transition: all 0.5s ease;
 }
+
+.topbar {
+  position: sticky !important;
+}
+
 .sidebar.close ~ .home-section{
   left: 78px;
   width: calc(100% - 78px);
