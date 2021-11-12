@@ -69,7 +69,7 @@ const Navbar = ({ props, history }) => {
 						<span className="logo_name fs-5">Cinema</span>
 					</div>
 				</Link>
-				<ul className="nav-links">
+				<ul className="nav-links px-0 pt-3">
 					<li>
 						<Link to="/movie">
 							<FontAwesomeIcon icon="film" className="text-white" />

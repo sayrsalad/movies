@@ -57,7 +57,7 @@ export default class Genres extends Component {
     render() {
 
         return (
-            <div className="container">
+            <div className="container table-responsive">
                 <Link className="mb-3 btn btn-primary" to="/genre/create">Add Genre</Link>
 
                 <table className="table table-striped table-borderless table-dark rounded-3 overflow-hidden">

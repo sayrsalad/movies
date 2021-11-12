@@ -35,38 +35,35 @@ const App = () => {
 	return (
 		<Router>
 			<div className="app">
-				<Switch>
-					<Route path="/login" exact component={Login} />
-					<Route path="/register" exact component={Register} />
+				<div>
+					<Switch>
+						<Route path="/login" exact component={Login} />
+						<Route path="/register" exact component={Register} />
+						<Navbar />
+					</Switch>
+					<div className="home-section">
 
-					<Navbar />
-				</Switch>
+						<br />
+						<PrivateRoute path="/" exact component={Home} />
 
-				<div className="home-section">
+						<PrivateRoute path="/movie" exact component={Movies} />
+						<PrivateRoute path="/movie/create" component={CreateMovie} />
+						<PrivateRoute path="/movie/edit/:id" component={EditMovie} />
 
-					<br />
-					<PrivateRoute path="/" exact component={Home} />
+						<PrivateRoute path="/actor" exact component={Actors} />
+						<PrivateRoute path="/actor/create" component={CreateActor} />
+						<PrivateRoute path="/actor/edit/:id" component={EditActor} />
 
-					<PrivateRoute path="/movie" exact component={Movies} />
-					<PrivateRoute path="/movie/create" component={CreateMovie} />
-					<PrivateRoute path="/movie/edit/:id" component={EditMovie} />
+						<PrivateRoute path="/genre" exact component={Genres} />
+						<PrivateRoute path="/genre/create" component={CreateGenre} />
+						<PrivateRoute path="/genre/edit/:id" component={EditGenre} />
 
-					<PrivateRoute path="/actor" exact component={Actors} />
-					<PrivateRoute path="/actor/create" component={CreateActor} />
-					<PrivateRoute path="/actor/edit/:id" component={EditActor} />
-
-					<PrivateRoute path="/genre" exact component={Genres} />
-					<PrivateRoute path="/genre/create" component={CreateGenre} />
-					<PrivateRoute path="/genre/edit/:id" component={EditGenre} />
-
-					<PrivateRoute path="/producer" exact component={Producers} />
-					<PrivateRoute path="/producer/create" component={CreateProducer} />
-					<PrivateRoute path="/producer/edit/:id" component={EditProducer} />
+						<PrivateRoute path="/producer" exact component={Producers} />
+						<PrivateRoute path="/producer/create" component={CreateProducer} />
+						<PrivateRoute path="/producer/edit/:id" component={EditProducer} />
+					</div>
 				</div>
-
-
 			</div>
-
 		</Router>
 	);
 }

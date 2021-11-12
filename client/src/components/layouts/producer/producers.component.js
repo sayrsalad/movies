@@ -60,7 +60,7 @@ export default class Producers extends Component {
     render() {
 
         return (
-            <div className="container">
+            <div className="container table-responsive">
                 <Link className="mb-3 btn btn-primary" to="/producer/create">Add Producer</Link>
 
                 <table className="table table-striped table-borderless table-dark rounded-3 overflow-hidden">
