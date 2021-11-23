@@ -1,0 +1,46 @@
+[
+    {
+        "title": "Avengers: Endgame",
+        "story": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "releaseDate": "2019-01-01",
+        "duration": "123",
+        "genre": {
+            "_id": "6173ad0fa55bc8501c2f3285",
+            "name": "asdsa" 
+        },
+        "poster": "noposter.png"
+    },
+    {
+        "title": "IT",
+        "story": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "releaseDate": "2019-01-01",
+        "duration": "123",
+        "genre": {
+            "_id": "6173ad0fa55bc8501c2f3285",
+            "name": "asdsa" 
+        },
+        "poster": "noposter.png"
+    },
+    {
+        "title": "Justice League",
+        "story": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "releaseDate": "2019-01-01",
+        "duration": "123",
+        "genre": {
+            "_id": "6173ad0fa55bc8501c2f3285",
+            "name": "asdsa" 
+        },
+        "poster": "noposter.png"
+    },
+    {
+        "title": "Spiderman",
+        "story": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "releaseDate": "2019-01-01",
+        "duration": "123",
+        "genre": {
+            "_id": "6173ad0fa55bc8501c2f3285",
+            "name": "asdsa" 
+        },
+        "poster": "noposter.png"
+    }
+]

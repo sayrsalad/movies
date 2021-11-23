@@ -109,6 +109,7 @@ export default class EditMovie extends Component {
     }
 
     render() {
+        
         return (
             <div className="container">
                 <h1>Update Movie</h1>
@@ -131,7 +132,7 @@ export default class EditMovie extends Component {
                     
 					<div className="form-group">
 						<label htmlFor="genre" className="control-label">Genre</label>
-						<select className="form-control" data-name="genre" onChange={this.onChange} defaultValue={this.state.genre._id} required>
+						<select className="form-control" data-name="genre" onChange={this.onChange} defaultValue={{label: this.state.genre.name, value: this.state.genre._id}} required>
 							<option value="0" disabled>-- Select Genre --</option>
 							{this.genres()}
 						</select>
