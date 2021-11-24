@@ -5,27 +5,27 @@ const Schema = mongoose.Schema;
 const movieSchema = new Schema({
     title: {
         type: String,
-        require: true,
+        required: [true, 'Please enter movie title'],
         trim: true
     },
     poster: {
         type: String,
-        require: true,
+        required: [true, 'Please enter valid image'],
         trim: true
     },
     story: {
         type: String,
-        require: true,
+        required: [true, 'Please enter movie story'],
         trim: true
     },
     releaseDate: {
         type: Date,
-        require: true,
+        required: [true, 'Please enter movie release date'],
         trim: true
     },
     duration: {
         type: Number,
-        require: true,
+        required: [true, 'Please enter movie duration'],
         trim: true
     },
     genre: {

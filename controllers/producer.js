@@ -1,6 +1,9 @@
-const Producer = require('../models/producer.model');
+const Producer = require('../models/Producer');
 
-exports.index = async (req, res, next) => {
+const ErrorResponse = require('../utils/errorResponse');
+const catchAsyncErrors = require('../middleware/catchAsyncErrors');
+
+exports.index = catchAsyncErrors(async (req, res, next) => {
     try {
         const producer = await Producer.find();
         res.status(200).json({
@@ -10,9 +13,9 @@ exports.index = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-}
+});
 
-exports.add = async (req, res, next) => {
+exports.add = catchAsyncErrors(async (req, res, next) => {
     try {
         const producer = new Producer(req.body);
 
@@ -26,9 +29,9 @@ exports.add = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-}
+});
 
-exports.update = async (req, res, next) => {
+exports.update = catchAsyncErrors(async (req, res, next) => {
     try {
         const producer = await Producer.findById(req.params.id);
 
@@ -43,11 +46,11 @@ exports.update = async (req, res, next) => {
             producer
         });
     } catch (error) {
-        next(error);
+        next(new ErrorResponse('Producer not found', 404));
     }
-}
+})
 
-exports.find = async (req, res, next) => {
+exports.find = catchAsyncErrors(async (req, res, next) => {
     try {
         const producer = await Producer.findById(req.params.id);
 
@@ -56,11 +59,11 @@ exports.find = async (req, res, next) => {
             producer
         });
     } catch (error) {
-        next(error);
+        next(new ErrorResponse('Producer not found', 404));
     }
-}
+});
 
-exports.remove = async (req, res, next) => {
+exports.remove = catchAsyncErrors(async (req, res, next) => {
     try {
         await Producer.findByIdAndDelete(req.params.id);
 
@@ -71,4 +74,4 @@ exports.remove = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-}
+});

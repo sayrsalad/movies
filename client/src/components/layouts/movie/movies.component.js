@@ -9,14 +9,16 @@ const Movie = props => {
     return (
         <tr>
             <td className="ps-5">{props.movie.title}</td>
-            <td><img src={`../uploads/poster/${props.movie.poster}`} className="rounded poster" alt="..."/></td>
+            <td><img src={`../uploads/poster/${props.movie.poster}`} className="rounded poster" alt="..." /></td>
             <td>{props.movie.story}</td>
             <td>{props.movie.genre.name}</td>
             <td>{props.movie.releaseDate}</td>
             <td>{props.movie.duration}</td>
             <td className="text-center fs-5">
                 <Link className="link-primary" to={'movie/edit/' + props.movie._id}><FontAwesomeIcon icon="pen-square" /></Link>
-                <Link className="ms-4 link-danger" to={'/movie'} onClick={() => { props.deleteMovie(props.movie._id) }}><FontAwesomeIcon icon="trash-alt" /></Link>
+            </td>
+            <td className="text-center fs-5">
+                <Link className="link-danger" to={'/movie'} onClick={() => { props.deleteMovie(props.movie._id) }}><FontAwesomeIcon icon="trash-alt" /></Link>
             </td>
         </tr>
     );
@@ -77,7 +79,7 @@ export default class Movies extends Component {
                             <th scope="col">Genre</th>
                             <th scope="col">Release Date</th>
                             <th scope="col">Duration</th>
-                            <th scope="col" className="text-center">Actions</th>
+                            <th scope="col" colSpan="2" className="text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody>

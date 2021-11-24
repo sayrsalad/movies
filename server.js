@@ -1,35 +1,26 @@
-require('dotenv').config({path: "./config.env"});
-
-const express = require('express');
+const app = require('./app')
 const connectDatabase = require('./config/database');
-const cors = require('cors');
-const errorHandler = require('./middleware/error');
+
+process.on('uncaughtException', err => {
+    console.log(`ERROR: ${err.message}`);
+    console.log('Shutting down the server due to Uncaught Exception');
+    process.exit(1);
+});
+
+if (process.env.NODE_ENV !== 'PRODUCTION') require('dotenv').config({ path: './config.env' })
 
 connectDatabase();
 
-const AuthRouter = require('./routes/auth');
-const PrivateRouter = require('./routes/private');
-const MovieRouter = require('./routes/movie');
-const ActorRouter = require('./routes/actor');
-const ProducerRouter = require('./routes/producer');
-const GenreRouter = require('./routes/genre');
-
-const app = express();
-app.use(cors());
-
-app.use(express.json());
-
 const PORT = process.env.PORT || 5000;
 
-app.use('/api/auth', AuthRouter);
-app.use('/api/private', PrivateRouter);
-app.use('/api/movie', MovieRouter);
-app.use('/api/actor', ActorRouter);
-app.use('/api/producer', ProducerRouter);
-app.use('/api/genre', GenreRouter);
-
-app.use(errorHandler);
-
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
+});
+
+process.on('unhandledRejection', err => {
+    console.log(`ERROR: ${err.message}`);
+    console.log('Shutting down the server due to Unhandled Promise Rejection');
+    server.close(() => {
+        process.exit(1);
+    });
 });

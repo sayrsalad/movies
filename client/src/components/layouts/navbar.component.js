@@ -141,7 +141,7 @@ const Navbar = ({ props, history }) => {
 				</ul>
 			</div>
 
-				<nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top home-section topbar">
+				<nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top home-section topbar shadow">
 					<div className="container-fluid">
 						<FontAwesomeIcon icon="bars" onClick={sidebarToggle} className="sidebar-toggler" size="2x" />
 						{/* <a className="navbar-brand fw-bold" href="/#">Movies</a> */}

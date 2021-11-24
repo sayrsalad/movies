@@ -1,5 +1,5 @@
-const Producer = require('../models/producer.model');
-const Movie = require('../models/movie.model');
+const Producer = require('../models/Producer');
+const Movie = require('../models/Movie');
 
 const dotenv = require('dotenv');
 const connectDatabase = require('../config/database');

@@ -5,17 +5,17 @@ const Schema = mongoose.Schema;
 const producerSchema = new Schema({
     name: {
         type: String,
-        require: true,
+        required: [true, 'Please enter producer name'],
         trim: true
     },
     email: {
         type: String,
-        require: true,
+        required: [true, 'Please enter producer email'],
         trim: true
     },
     website: {
         type: String,
-        require: true,
+        required: [true, 'Please enter producer website'],
         trim: true
     }
 }, {

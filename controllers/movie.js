@@ -1,18 +1,25 @@
-const Movie = require('../models/movie.model');
+const Movie = require('../models/Movie');
 
-exports.index = async (req, res, next) => {
+const ErrorResponse = require('../utils/errorResponse');
+const catchAsyncErrors = require('../middleware/catchAsyncErrors');
+const APIFeatures = require('../utils/apiFeatures');
+
+exports.index = catchAsyncErrors(async (req, res, next) => {
     try {
-        const movie = await Movie.find();
+        const apiFeatures = new APIFeatures(Movie.find(), req.query).search();
+        
+        const movie = await apiFeatures.query;
         res.status(200).json({
             success: true,
+            count: movie.length,
             movie
         });
     } catch (error) {
         next(error);
     }
-};
+});
 
-exports.add = async (req, res, next) => {
+exports.add = catchAsyncErrors(async (req, res, next) => {
     try {
         const movie = new Movie(req.body);
 
@@ -28,19 +35,17 @@ exports.add = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-};
+});
 
-exports.update = async (req, res, next) => {
+exports.update = catchAsyncErrors(async (req, res, next) => {
     try {
-        const movie = await Movie.findById(req.params.id);
+        const movie = await Movie.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+            runValidators: true,
+            useFindAndModify: false
+        });
 
-        movie.title = req.body.title;
         movie.poster = req.file.filename;
-        movie.story = req.body.story;
-        movie.releaseDate = req.body.releaseDate;
-        movie.duration = req.body.duration;
-        movie.genre._id = req.body.genre._id;
-        movie.genre.name = req.body.genre.name;
 
         movie.save();
 
@@ -49,11 +54,11 @@ exports.update = async (req, res, next) => {
             movie
         });
     } catch (error) {
-        next(error);
+        next(new ErrorResponse('Movie not found', 404));
     }
-};
+});
 
-exports.find = async (req, res, next) => {
+exports.find = catchAsyncErrors(async (req, res, next) => {
     try {
         const movie = await Movie.findById(req.params.id);
 
@@ -62,11 +67,11 @@ exports.find = async (req, res, next) => {
             movie
         });
     } catch (error) {
-        next(error);
+        next(new ErrorResponse('Movie not found', 404));
     }
-};
+});
 
-exports.remove = async (req, res, next) => {
+exports.remove = catchAsyncErrors(async (req, res, next) => {
     try {
         await Movie.findByIdAndDelete(req.params.id);
 
@@ -77,4 +82,4 @@ exports.remove = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-};
+});

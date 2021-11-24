@@ -5,22 +5,22 @@ const Schema = mongoose.Schema;
 const actorSchema = new Schema({
     firstname: {
         type: String,
-        require: true,
+        required: [true, 'Please enter actor first name'],
         trim: true
     },
     lastname: {
         type: String,
-        require: true,
+        required: [true, 'Please enter actor last name'],
         trim: true
     },
     profile: {
         type: String,
-        require: true,
+        required: [true, 'Please enter actor profile'],
         trim: true
     },
     email: {
         type: String,
-        require: true,
+        required: [true, 'Please enter actor email'],
         trim: true
     }
 }, {

@@ -1,4 +1,4 @@
-const Genre = require('../models/genre.model');
+const Genre = require('../models/Genre');
 
 exports.index = async (req, res, next) => {
     try {
