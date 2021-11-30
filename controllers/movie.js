@@ -6,12 +6,20 @@ const APIFeatures = require('../utils/apiFeatures');
 
 exports.index = catchAsyncErrors(async (req, res, next) => {
     try {
-        const apiFeatures = new APIFeatures(Movie.find(), req.query).search();
+
+        const resPerPage = 5;
+        const movieCount = await Movie.countDocuments();
+
+        const apiFeatures = new APIFeatures(Movie.find(), req.query)
+            .search()
+            .filter()
+            .pagination(resPerPage);
         
         const movie = await apiFeatures.query;
         res.status(200).json({
             success: true,
             count: movie.length,
+            movieCount,
             movie
         });
     } catch (error) {

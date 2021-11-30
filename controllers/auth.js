@@ -1,7 +1,9 @@
-const User = require('../models/user.model');
+const User = require('../models/User');
 const ErrorResponse = require("../utils/errorResponse");
+const catchAsyncErrors = require('../middleware/catchAsyncErrors');
+const sendToken = require('../utils/jwtToken');
 
-exports.register = async (req, res, next) => {
+exports.register = catchAsyncErrors (async (req, res, next) => {
     const { username, email, password } = req.body;
 
     try {
@@ -11,14 +13,14 @@ exports.register = async (req, res, next) => {
             password
         });
 
-        sendToken(user, 201, res);
+        sendToken(user, 200, res);
 
     } catch (error) {
         next(error);
     }
-};
+});
 
-exports.login = async (req, res, next) => {
+exports.login = catchAsyncErrors (async (req, res, next) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -43,7 +45,19 @@ exports.login = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-};
+});
+
+exports.logout = catchAsyncErrors (async (req, res, next) => {
+    res.cookie('token', null, {
+        expires: new Date(Date.now()),
+        httpOnly: true
+    });
+
+    res.status(200).json({
+        success: true,
+        message: 'Logged Out'
+    });
+});
 
 exports.forgotpassword = (req, res, next) => {
     res.send("Forgot Password Route");
@@ -53,7 +67,7 @@ exports.resetpassword = (req, res, next) => {
     res.send("Reset Password Route");
 };
 
-const sendToken = (user, statusCode, res) => {
-    const token = user.getSignedToken();
-    res.status(statusCode).json({ success: true, token });
-}
+// const sendToken = (user, statusCode, res) => {
+//     const token = user.getSignedToken();
+//     res.status(statusCode).json({ success: true, token });
+// }

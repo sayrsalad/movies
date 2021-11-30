@@ -1,16 +1,14 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/user.model');
+const User = require('../models/User');
 const ErrorResponse = require('../utils/errorResponse');
+const catchAsyncErrors = require('../middleware/catchAsyncErrors');
 
-exports.protect = async (req, res, next) => {
-    let token;
+exports.protect = catchAsyncErrors (async (req, res, next) => {
 
-    if(req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
-        token = req.headers.authorization.split(" ")[1];
-    }
+    const { token } = req.cookies;
 
     if(!token) {
-        return next(new ErrorResponse("You are not authorized to access this", 401));
+        return next(new ErrorResponse('You have to login first to access this.', 401));
     }
 
     try {
@@ -28,4 +26,16 @@ exports.protect = async (req, res, next) => {
     } catch (error) {
         return next(new ErrorResponse("You are not authorized to access this", 401));
     }
-}
+
+    // let token;
+
+    // if(req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+    //     token = req.headers.authorization.split(" ")[1];
+    // }
+
+    // if(!token) {
+    //     return next(new ErrorResponse("You are not authorized to access this", 401));
+    // }
+
+
+});

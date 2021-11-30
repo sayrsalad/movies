@@ -1,13 +1,15 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const validator = require('validator');
 
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
     username: {
         type: String,
-        required: [true, "Please enter a valid username"]
+        required: [true, "Please enter a valid username"],
+        minlength: 8
     }, 
     email: {
         type: String,
@@ -16,16 +18,31 @@ const UserSchema = new Schema({
         match: [
             /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
             'Please add a valid email address',
-          ]
+          ],
+        validate: [validator.isEmail, 'Please add a valid email address']
     },
     password: {
         type: String,
         required: [true, "Please enter a valid password"],
-        minlength: 8,
+        minlength: 6,
         select: false
     },
+    avatar: {
+        public_id: {
+            type: String,
+            required: true
+        },
+        url: {
+            type: String,
+            required: true
+        }
+    },
+    role: {
+        type: String,
+        default: 'user'
+    },
     resetPasswordToken: String,
-    resetPasswordDate: Date
+    resetPasswordExpire: Date
 }, {
     timestamps: true
 });
@@ -45,7 +62,9 @@ UserSchema.methods.matchPasswords = async function(password) {
 }
 
 UserSchema.methods.getSignedToken = function() {
-    return jwt.sign({ id: this._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
+    return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_EXPIRE
+    });
 }
 
 const User = mongoose.model('User', UserSchema);

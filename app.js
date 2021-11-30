@@ -2,12 +2,14 @@ const express = require('express');
 const app = express();
 
 const errorHandler = require('./middleware/error');
+const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
 if (process.env.NODE_ENV !== 'PRODUCTION') require('dotenv').config({ path: './config.env' })
 
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 
 const AuthRouter = require('./routes/auth');
 const PrivateRouter = require('./routes/private');
