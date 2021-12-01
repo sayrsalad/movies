@@ -48,7 +48,7 @@ const Register = ({ history }) => {
         <section className="h-50">
             <div className="container py-5 h-50">
                 <div className="row d-flex justify-content-center align-items-center h-75">
-                    <div className="col col-lg-10">
+                    <div className="col col-xl-10">
                         <div className="card rounded-3 shadow-lg border-0">
                             <div className="row g-0">
                                 <div className="col-md-6 col-lg-5 d-none d-md-block">

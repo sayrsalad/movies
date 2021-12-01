@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto')
 const jwt = require('jsonwebtoken');
 const validator = require('validator');
 
@@ -8,8 +9,7 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
     username: {
         type: String,
-        required: [true, "Please enter a valid username"],
-        minlength: 8
+        required: [true, "Please enter a valid username"]
     }, 
     email: {
         type: String,
@@ -30,11 +30,11 @@ const UserSchema = new Schema({
     avatar: {
         public_id: {
             type: String,
-            required: true
+            default: 'user/empty_profile'
         },
         url: {
             type: String,
-            required: true
+            default: '../uploads/user/empty_profile.png'
         }
     },
     role: {
@@ -65,6 +65,16 @@ UserSchema.methods.getSignedToken = function() {
     return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRE
     });
+}
+
+UserSchema.methods.getResetPasswordToken = function() {
+    const resetToken = crypto.randomBytes(20).toString('hex');
+
+    this.resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+
+    this.resetPasswordExpire = Date.now() + 30 * 60 * 1000;
+
+    return resetToken;
 }
 
 const User = mongoose.model('User', UserSchema);

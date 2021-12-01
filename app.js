@@ -12,14 +12,12 @@ app.use(express.json());
 app.use(cookieParser());
 
 const AuthRouter = require('./routes/auth');
-const PrivateRouter = require('./routes/private');
 const MovieRouter = require('./routes/movie');
 const ActorRouter = require('./routes/actor');
 const ProducerRouter = require('./routes/producer');
 const GenreRouter = require('./routes/genre');
 
 app.use('/api/auth', AuthRouter);
-app.use('/api/private', PrivateRouter);
 app.use('/api/movie', MovieRouter);
 app.use('/api/actor', ActorRouter);
 app.use('/api/producer', ProducerRouter);

@@ -29,6 +29,9 @@ exports.index = catchAsyncErrors(async (req, res, next) => {
 
 exports.add = catchAsyncErrors(async (req, res, next) => {
     try {
+
+        req.body.user = req.user.id;
+
         const movie = new Movie(req.body);
 
         movie.poster = req.file.filename;

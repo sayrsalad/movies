@@ -3,7 +3,7 @@ const User = require('../models/User');
 const ErrorResponse = require('../utils/errorResponse');
 const catchAsyncErrors = require('../middleware/catchAsyncErrors');
 
-exports.protect = catchAsyncErrors (async (req, res, next) => {
+exports.isAuthenticatedUser = catchAsyncErrors (async (req, res, next) => {
 
     const { token } = req.cookies;
 
@@ -37,5 +37,14 @@ exports.protect = catchAsyncErrors (async (req, res, next) => {
     //     return next(new ErrorResponse("You are not authorized to access this", 401));
     // }
 
-
 });
+
+exports.authorizeRoles = ( ...roles ) => {
+    return (req, res, next) => {
+        if (!roles.includes(req.user.role)) {
+            return next(
+                new ErrorResponse(`Role (${req.user.role}) is not allowed to acces this resouce.`, 403));
+        }
+        next();
+    }
+};

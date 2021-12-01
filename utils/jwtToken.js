@@ -1,4 +1,4 @@
-const sendToken = (user, statusCode, response) => {
+const sendToken = (user, statusCode, res) => {
 
     const token = user.getSignedToken();
 

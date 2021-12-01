@@ -9,8 +9,8 @@ router.route("/login").post(login);
 
 router.route("/logout").get(logout);
 
-router.route("/forgotpassword").post(forgotpassword);
+router.route("/password/forgot").post(forgotpassword);
 
-router.route("/resetpassword/:resetToken").put(resetpassword);
+router.route("/password/reset/:token").put(resetpassword);
 
 module.exports = router;
