@@ -6,21 +6,19 @@ const APIFeatures = require('../utils/apiFeatures');
 
 exports.index = catchAsyncErrors(async (req, res, next) => {
     try {
-
+        
         const resPerPage = 5;
-        const movieCount = await Movie.countDocuments();
+        const moviesCount = await Movie.countDocuments();
 
         const apiFeatures = new APIFeatures(Movie.find(), req.query)
             .search()
-            .filter()
-            .pagination(resPerPage);
-        
-        const movie = await apiFeatures.query;
+            .filter();
+
+        const movies = await apiFeatures.query;
         res.status(200).json({
             success: true,
-            count: movie.length,
-            movieCount,
-            movie
+            moviesCount,
+            movies
         });
     } catch (error) {
         next(error);
@@ -93,4 +91,80 @@ exports.remove = catchAsyncErrors(async (req, res, next) => {
     } catch (error) {
         next(error);
     }
+});
+
+exports.createMovieReview = catchAsyncErrors(async (req, res, next) => {
+
+    const { rating, comment, _id } = req.body;
+
+    const review = {
+        user: req.user._id,
+        username: req.user.username,
+        rating: Number(rating),
+        comment
+    }
+
+    const movie = await Movie.findById(_id);
+
+    const isReviewed = movie.reviews.find(
+        r => r.user.toString() === req.user._id.toString()
+    );
+
+    if (isReviewed) {
+        movie.reviews.forEach(review => {
+            if (review.user.toString() === req.user._id.toString()) {
+                review.comment = comment;
+                review.rating = rating;
+            }
+        });
+
+    } else {
+        movie.reviews.push(review);
+        movie.numOfReviews = movie.reviews.length;
+    }
+
+    movie.ratings = movie.reviews.reduce((acc, item) => item.rating + acc, 0) / movie.reviews.length;
+
+    await movie.save({ validateBeforeSave: false });
+
+    res.status(200).json({
+        success: true
+    })
+
+});
+
+exports.getMovieReviews = catchAsyncErrors(async (req, res, next) => {
+    const movie = await Movie.findById(req.query.id);
+
+    console.log(req.query.id);
+
+    res.status(200).json({
+        success: true,
+        reviews: movie.reviews
+    })
+});
+
+exports.deleteMovieReview = catchAsyncErrors(async (req, res, next) => {
+
+    const movie = await Movie.findById(req.query.movie_id);
+
+    const reviews = movie.reviews.filter(review => review.user.toString() !== req.query._id.toString());
+
+    const numOfReviews = reviews.length;
+
+    const ratings = reviews.reduce((acc, item) => item.rating + acc, 0) / reviews.length
+
+    await Movie.findByIdAndUpdate(req.query.movie_id, {
+        reviews,
+        ratings,
+        numOfReviews
+    }, {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false
+    })
+
+    res.status(200).json({
+        success: true
+    })
 });

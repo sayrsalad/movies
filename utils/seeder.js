@@ -1,10 +1,12 @@
 const Producer = require('../models/Producer');
+const Actor = require('../models/Actor');
 const Movie = require('../models/Movie');
 
 const dotenv = require('dotenv');
 const connectDatabase = require('../config/database');
 
 const producers = require('../data/producers');
+const actors = require('../data/actors');
 const movies = require('../data/movies');
 
 dotenv.config({ path: 'config.env' });
@@ -19,6 +21,23 @@ const seedProducers = async () => {
 
         await Producer.insertMany(producers);
         console.log('All Producers Added');
+
+        process.exit();
+
+    } catch (error) {
+        console.log(error.message);
+        process.exit();
+    }
+}
+
+const seedActors = async () => {
+    try {
+        
+        await Actor.deleteMany();
+        console.log('Actor deleted');
+
+        await Actor.insertMany(actors);
+        console.log('All Actors Added');
 
         process.exit();
 
@@ -46,4 +65,5 @@ const seedMovies = async () => {
 }
 
 seedProducers();
+seedActors();
 seedMovies();

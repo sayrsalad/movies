@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-import image1 from '../../../assets/images/image1.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Register = ({ history }) => {
@@ -53,7 +52,7 @@ const Register = ({ history }) => {
                             <div className="row g-0">
                                 <div className="col-md-6 col-lg-5 d-none d-md-block">
                                     <img
-                                        src={image1}
+                                        src="/images/image1.jpg"
                                         alt="login form"
                                         className="img-fluid rounded-3" />
                                 </div>

@@ -1,0 +1,13 @@
+.logo-brand {
+    color: #E50914 !important;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 30px !important;
+}
+
+.home-navbar {
+    background: linear-gradient(to top, transparent 0%, rgb(0, 0, 0, 0.3) 50%);
+}
+
+.home-navbar-dark {
+    color: #FFFFFF !important;
+}
