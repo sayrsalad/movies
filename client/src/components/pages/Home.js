@@ -1,14 +1,13 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Pagination from 'react-js-pagination';
+import { useAlert } from 'react-alert';
 
 import MetaData from '../layout/MetaData';
 import Loader from '../layout/Loader';
 
 import MovieCards from '../movie/MovieCards';
 import { getMovies } from '../../actions/movieActions';
-
-import { useAlert } from 'react-alert';
 
 import './home.css';
 

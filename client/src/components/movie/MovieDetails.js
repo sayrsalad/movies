@@ -1,10 +1,9 @@
 import React, { Fragment, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useAlert } from 'react-alert';
 
 import { getMovieDetails, clearErrors } from '../../actions/movieActions';
-
-import { useAlert } from 'react-alert';
 
 import MetaData from '../layout/MetaData';
 import Loader from '../layout/Loader';

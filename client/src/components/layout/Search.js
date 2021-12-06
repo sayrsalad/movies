@@ -22,7 +22,7 @@ const Search = ({ history }) => {
             <div className="input-group me-3">
                 <input
                     className="form-control bg-dark border-0 text-white remove-form-design"
-                    type="search"
+                    type="text"
                     placeholder="Search"
                     aria-label="Search"
                     onChange={(e) => setKeyword(e.target.value)}

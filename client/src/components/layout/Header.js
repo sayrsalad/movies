@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Search from './Search';
 
 import './header.css';
-import './search.css';
 
 const Header = () => {
 
