@@ -1,0 +1,27 @@
+.page-item.active .page-link{
+    color: #E50914 !important;
+    text-decoration: none;
+}
+
+.page-item.disabled .page-link{
+    color: #8D9D9A !important;
+    text-decoration: none;
+}
+
+.page-item:focus,
+.page-item:active,
+.page-item:hover {
+    outline: 0px none #fff !important;
+    box-shadow: none !important;
+}
+
+.page-link:focus,
+.page-link:active,
+.page-link:hover {
+    outline: 0px none #fff !important;
+    box-shadow: none !important;
+}
+
+.page-link {
+    color: #FFFFFF !important;
+}

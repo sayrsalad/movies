@@ -12,7 +12,7 @@ img {
 .movie_card {
   padding: 0 !important;
   width: 200px;
-  height: 350;
+  height: 350px;
   margin: 14px;
   box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 15px 0 rgba(0, 0, 0, 0.19);
   background-color: #141414;
@@ -20,6 +20,7 @@ img {
 
 .movie_card:hover {
   transform: scale(1.1);
+  z-index: 10000;
   cursor: pointer;
 }
 
@@ -75,4 +76,3 @@ img {
 .movie_card .card-body {
   padding-top: 2px;
 }
-

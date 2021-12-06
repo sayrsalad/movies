@@ -10,6 +10,8 @@ import Home from './components/pages/Home';
 import Footer from './components/layout/Footer';
 
 import AdminHeader from './components/admin/AdminHeader';
+
+import MovieDetails from './components/movie/MovieDetails';
 // import Dashboard from './components/admin/Dashboard';
 
 // import PrivateRoute from './components/routing/PrivateRoute';
@@ -84,6 +86,8 @@ const App = () => {
 				{path === "dashboard" ? (<AdminHeader/>) : (<Header/>)}
 				<div className=" container-fluid">
 					<Route path="/" component={Home} exact />
+					<Route path="/search/:keyword" component={Home} />
+					<Route path="/movie/:id" component={MovieDetails} exact />
 				</div>
 				{loading ? null : <Footer />}
 			</div>

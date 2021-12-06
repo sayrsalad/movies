@@ -12,12 +12,14 @@ exports.index = catchAsyncErrors(async (req, res, next) => {
 
         const apiFeatures = new APIFeatures(Movie.find(), req.query)
             .search()
-            .filter();
+            .filter()
+            .pagination(resPerPage);
 
         const movies = await apiFeatures.query;
         res.status(200).json({
             success: true,
             moviesCount,
+            resPerPage,
             movies
         });
     } catch (error) {

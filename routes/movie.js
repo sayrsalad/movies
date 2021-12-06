@@ -16,7 +16,7 @@ router.route('/reviews').get(isAuthenticatedUser, getMovieReviews);
 
 router.route('/reviews').delete(isAuthenticatedUser, deleteMovieReview);
 
-router.route('/:id').get(isAuthenticatedUser, find);
+router.route('/:id').get(find);
 
 router.route('/:id').delete(isAuthenticatedUser, remove);
 

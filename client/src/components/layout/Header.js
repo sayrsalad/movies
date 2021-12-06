@@ -1,10 +1,15 @@
-import React, { Fragment } from 'react';
-// import { Route, Link } from 'react-router-dom';
+import React, { Fragment, useState } from 'react';
+import { Route } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import Search from './Search';
+
 import './header.css';
+import './search.css';
 
 const Header = () => {
+
+    const [dropdown, setDropdown] = useState("");
     // const alert = useAlert();
     // const dispatch = useDispatch();
 
@@ -30,22 +35,19 @@ const Header = () => {
                                 <a className="fw-bold nav-link text-white" href="/#">Home <span className="sr-only">(current)</span></a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link text-white" href="/#">Features</a>
+                                <a className="nav-link text-white" href="/#">Actors</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link text-white" href="/#">Pricing</a>
+                                <a className="nav-link text-white" href="/#">Producers</a>
                             </li>
                         </ul>
-                        <form className="d-flex ms-auto">
-                            {/* <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-								<button className="btn btn-outline-success" type="submit">Search</button> */}
-                        </form>
-                        <ul className="navbar-nav mb-2 mb-lg-0">
+                        <Route render={({ history }) => <Search history={history} />} />
+                        <ul className="navbar-nav mb-2 mb-lg-0" onMouseEnter={() => setDropdown(true)} onMouseLeave={() => setDropdown(false)}>
                             <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" href="/#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a className={dropdown === true ? "nav-link dropdown-toggle show" : "nav-link dropdown-toggle"} href="/#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded={dropdown}>
                                     <FontAwesomeIcon icon="user" />
                                 </a>
-                                <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <ul className={dropdown === true ? "dropdown-menu dropdown-menu-end m-0 show" : "dropdown-menu dropdown-menu-end m-0"} aria-labelledby="navbarDropdown" data-bs-popper="">
                                     <li><a className="dropdown-item" href="/#">Profile</a></li>
                                     <li><a className="dropdown-item" href="/#">Dashboard</a></li>
                                     <li><hr className="dropdown-divider" /></li>
