@@ -36,7 +36,7 @@ const Home = ({ match }) => {
     function setCurrentPageNo(pageNumber) {
         setCurrentPage(pageNumber);
     }
-
+   
     return (
         <Fragment>
             {loading ? <Loader /> : (

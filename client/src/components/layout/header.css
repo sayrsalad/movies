@@ -11,3 +11,13 @@
 .home-navbar-dark {
     color: #FFFFFF !important;
 }
+
+.header-profile {
+    height: 30px;
+    width: 30px;
+}
+
+.dropdown-menu li a:hover{
+    color: #E50914 !important;
+    background-color: #212529 !important;
+}

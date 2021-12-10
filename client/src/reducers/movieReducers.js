@@ -1,4 +1,7 @@
 import {
+    ADMIN_MOVIES_REQUEST,
+    ADMIN_MOVIES_SUCCESS,
+    ADMIN_MOVIES_FAIL,
     ALL_MOVIES_REQUEST,
     ALL_MOVIES_SUCCESS,
     ALL_MOVIES_FAIL,
@@ -11,10 +14,17 @@ import {
 
 export const moviesReducer = (state = { movies: [] }, action) => {
     switch (action.type) {
+        case ADMIN_MOVIES_REQUEST:
         case ALL_MOVIES_REQUEST:
             return {
                 loading: true,
                 movies: []
+            }
+
+        case ADMIN_MOVIES_SUCCESS:
+            return {
+                loading: false,
+                movies: action.payload
             }
 
         case ALL_MOVIES_SUCCESS:
@@ -24,7 +34,8 @@ export const moviesReducer = (state = { movies: [] }, action) => {
                 moviesCount: action.payload.moviesCount,
                 resPerPage: action.payload.resPerPage
             }
-
+        
+        case ADMIN_MOVIES_FAIL:
         case ALL_MOVIES_FAIL:
             return {
                 loading: false,
@@ -44,10 +55,11 @@ export const moviesReducer = (state = { movies: [] }, action) => {
 
 export const movieDetailsReducer = (state = { movie: {} }, action) => {
     switch (action.type) {
+
         case MOVIE_DETAILS_REQUEST:
             return {
-                loading: true,
-                ...state
+                ...state,
+                loading: true
             }
 
         case MOVIE_DETAILS_SUCCESS:
@@ -64,10 +76,11 @@ export const movieDetailsReducer = (state = { movie: {} }, action) => {
 
         case CLEAR_ERRORS:
             return {
-                ...state
+                ...state,
+                error: null
             }
 
         default:
-            return state;
+            return state
     }
 }

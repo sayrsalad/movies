@@ -13,16 +13,25 @@ const actorSchema = new Schema({
         required: [true, 'Please enter actor last name'],
         trim: true
     },
+    biography: {
+        type: String,
+        required: [true, 'Please enter biography'],
+        trim: true
+    },
     email: {
         type: String,
         required: [true, 'Please enter actor email'],
         trim: true
     },
     profile: {
-        type: String,
-        required: [true, 'Please enter valid profile picture'],
-        trim: true,
-        default: "1636619587424empty_profile.png"
+        public_id: {
+            type: String,
+            default: 'profiles/1636619587424empty_profile_pjbw6i'
+        },
+        url: {
+            type: String,
+            default: 'https://res.cloudinary.com/djqpxmv5o/image/upload/v1639001436/movflix/profiles/1636619587424empty_profile_pjbw6i.png'
+        }
     },
     images: [
         {

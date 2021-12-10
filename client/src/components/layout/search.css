@@ -26,7 +26,6 @@ input[type=text]:focus {
 }
 
 .remove-form-design {
-    color: #212529;
     border-color: none !important;
     outline: 0;
     box-shadow: none !important;

@@ -1,28 +1,36 @@
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 
+import { loadUser } from './actions/authActions';
+import store from './store';
+
+import ProtectedRoute from './components/route/ProtectedRoute';
+
+import Login from './components/pages/Login';
+import Register from './components/pages/Register';
+import Profile from './components/pages/Profile'
+
 import Header from './components/layout/Header';
-import Home from './components/pages/Home';
 import Footer from './components/layout/Footer';
 
-import AdminHeader from './components/admin/AdminHeader';
-
+import Home from './components/pages/Home';
 import MovieDetails from './components/movie/MovieDetails';
-// import Dashboard from './components/admin/Dashboard';
 
-// import PrivateRoute from './components/routing/PrivateRoute';
+import Actor from './components/pages/Actor';
+import ActorDetails from './components/actor/ActorDetails'
 
+import AdminHeader from './components/admin/AdminHeader';
+import Dashboard from './components/admin/Dashboard';
 
 // import Navbar from './components/layouts/navbar.component';
 
 // import Home from './components/layouts/home.component';
-
-// import Login from './components/layouts/user/login.component';
-// import Register from './components/layouts/user/register.component';
 
 // import Movies from './components/layouts/movie/movies.component';
 // import CreateMovie from './components/layouts/movie/create.movie.component';
@@ -46,18 +54,17 @@ const App = () => {
 
 	const path = window.location.pathname.slice(1);
 
+	useEffect(() => {
+
+		store.dispatch(loadUser());
+
+	}, [path]);
+
 	const { loading } = useSelector(state => state.movies);
 
 	return (
-		// <Router>
-		// 	<div className="app">
-		// 		<div>
-		// 			<Switch>
-		// 				<Route path="/login" exact component={Login} />
-		// 				<Route path="/register" exact component={Register} />
-		// 				<Navbar />
-		// 			</Switch>
-		// 			<div className="home-section">
+
+
 
 		// 				<br />
 		// 				<PrivateRoute path="/" exact component={Home} />
@@ -77,19 +84,28 @@ const App = () => {
 		// 				<PrivateRoute path="/producer" exact component={Producers} />
 		// 				<PrivateRoute path="/producer/create" component={CreateProducer} />
 		// 				<PrivateRoute path="/producer/edit/:id" component={EditProducer} />
-		// 			</div>
-		// 		</div>
-		// 	</div>
-		// </Router>
+
 		<Router>
 			<div className="App">
-				{path === "dashboard" ? (<AdminHeader/>) : (<Header/>)}
-				<div className=" container-fluid">
+				{/* {!path === "dashboard" ? (<Header/>) : (path === "login" || path === "register" ? null : null)} */}
+				{path === "login" || path === "register" ? null : (loading ? null : (path === "dashboard" ? (<AdminHeader/>) : (<Header/>)))}
+				{/* {loading ? null : (path === "login" || path === "register" ? null : ((dashboard ? (<AdminHeader />) : (<Header />))))} */}
+
+				<div className="container-fluid">
 					<Route path="/" component={Home} exact />
 					<Route path="/search/:keyword" component={Home} />
 					<Route path="/movie/:id" component={MovieDetails} exact />
+
+					<Route path="/actors" component={Actor} exact />
+					<Route path="/actor/:id" component={ActorDetails} exact />
+
+					<Route path="/login" exact component={Login} />
+					<Route path="/register" exact component={Register} />
+					<ProtectedRoute path="/me" component={Profile} exact />
+
+					<ProtectedRoute path="/dashboard" isAdmin={true} component={Dashboard} exact />
 				</div>
-				{loading ? null : <Footer />}
+				{path === "login" || path === "register" ? null : (loading ? null : (path === "dashboard" ? null : (<Footer/>)))}
 			</div>
 		</Router>
 	);

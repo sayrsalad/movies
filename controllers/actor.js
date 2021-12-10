@@ -2,13 +2,25 @@ const Actor = require('../models/Actor');
 
 const ErrorResponse = require('../utils/errorResponse');
 const catchAsyncErrors = require('../middleware/catchAsyncErrors');
+const APIFeatures = require('../utils/apiFeatures');
 
 exports.index = catchAsyncErrors(async (req, res, next) => {
     try {
-        const actor = await Actor.find();
+
+        const resPerPage = 6;
+        const actorsCount = await Actor.countDocuments();
+
+        const apiFeatures = new APIFeatures(Actor.find(), req.query)
+            .search()
+            .filter()
+            .pagination(resPerPage);
+
+        const actors = await apiFeatures.query;
         res.status(200).json({
             success: true,
-            actor
+            actorsCount,
+            resPerPage,
+            actors
         });
     } catch (error) {
         next(error);

@@ -99,10 +99,14 @@ const movieSchema = new Schema({
         trim: true
     },
     poster: {
-        type: String,
-        required: [true, 'Please enter valid poster'],
-        trim: true,
-        default: "noposter.png"
+        public_id: {
+            type: String,
+            default: 'posters/noposter_qaymbr'
+        },
+        url: {
+            type: String,
+            default: 'https://res.cloudinary.com/djqpxmv5o/image/upload/v1639001327/movflix/posters/noposter_qaymbr.jpg'
+        }
     },
     images: [
         {

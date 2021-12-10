@@ -7,7 +7,7 @@ const APIFeatures = require('../utils/apiFeatures');
 exports.index = catchAsyncErrors(async (req, res, next) => {
     try {
         
-        const resPerPage = 5;
+        const resPerPage = 6;
         const moviesCount = await Movie.countDocuments();
 
         const apiFeatures = new APIFeatures(Movie.find(), req.query)
@@ -169,4 +169,15 @@ exports.deleteMovieReview = catchAsyncErrors(async (req, res, next) => {
     res.status(200).json({
         success: true
     })
+});
+
+exports.getAdminMovies = catchAsyncErrors(async (req, res, next) => {
+
+    const movies = await Movie.find();
+
+    res.status(200).json({
+        success: true,
+        movies
+    })
+
 });

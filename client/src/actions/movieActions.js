@@ -1,6 +1,9 @@
 import axios from 'axios';
 
 import {
+    ADMIN_MOVIES_REQUEST,
+    ADMIN_MOVIES_SUCCESS,
+    ADMIN_MOVIES_FAIL,
     ALL_MOVIES_REQUEST,
     ALL_MOVIES_SUCCESS,
     ALL_MOVIES_FAIL,
@@ -45,6 +48,27 @@ export const getMovieDetails = (id) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: MOVIE_DETAILS_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
+export const getAdminMovies = () => async (dispatch) => {
+    try {
+
+        dispatch({ type: ADMIN_MOVIES_REQUEST })
+
+        const { data } = await axios.get(`/api/movie/admin`)
+
+        dispatch({
+            type: ADMIN_MOVIES_SUCCESS,
+            payload: data.movies
+        })
+
+    } catch (error) {
+
+        dispatch({
+            type: ADMIN_MOVIES_FAIL,
             payload: error.response.data.message
         })
     }
