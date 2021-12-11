@@ -9,17 +9,21 @@ exports.index = catchAsyncErrors(async (req, res, next) => {
         
         const resPerPage = 6;
         const moviesCount = await Movie.countDocuments();
-
+        
         const apiFeatures = new APIFeatures(Movie.find(), req.query)
             .search()
             .filter()
             .pagination(resPerPage);
-
+            
         const movies = await apiFeatures.query;
+
+        const filteredMoviesCount = movies.length;
+
         res.status(200).json({
             success: true,
             moviesCount,
             resPerPage,
+            filteredMoviesCount,
             movies
         });
     } catch (error) {

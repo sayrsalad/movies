@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const MovieCards = (props) => {
     return (
-        <Link to={'movie/' + props.movie._id} className="col-sm-auto">
+        <Link replace  to={'/movie/' + props.movie._id} className="col-sm-auto pb-3">
             <div className="card movie_card border-0 m-0">
                 <img src={props.movie.poster.url} className="card-img-top" alt={props.movie.poster.public_id} />
                 <div className="card-body pb-3">

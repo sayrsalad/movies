@@ -25,3 +25,7 @@
 .page-link {
     color: #FFFFFF !important;
 }
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.5);
+}

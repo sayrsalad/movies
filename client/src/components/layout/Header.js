@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Route, Link } from 'react-router-dom';
+import { Route, Link, useLocation } from 'react-router-dom';
 import { useAlert } from 'react-alert';
 
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,6 +23,8 @@ const Header = ({ history }) => {
         dispatch(logout());
         alert.success('Logged out successfully.')
     }
+
+    const path = useLocation().pathname.split('/')[1];
 
     return (
         <Fragment>
@@ -47,7 +49,7 @@ const Header = ({ history }) => {
                                 <a className="nav-link text-white" href="/#">Producers</a>
                             </li>
                         </ul>
-                        <Route render={({ history }) => <Search history={history} />} />
+                        <Route render={({ history }) => <Search history={history} search={path} />} />
 
                         {user ? (
                             <ul className="navbar-nav mb-2 mb-lg-0" onMouseEnter={() => setDropdown(true)} onMouseLeave={() => setDropdown(false)}>

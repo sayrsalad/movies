@@ -3,15 +3,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './search.css';
 
-const Search = ({ history }) => {
+const Search = ({ history, search }) => {
 
     const [keyword, setKeyword] = useState("");
+
+    search = search === "" ? "movies" : search;
 
     const searchHandler = (e) => {
         e.preventDefault();
         
-        if (keyword.trim) {
-            history.push(`/search/${keyword}`);
+        if (keyword.trim()) {
+            history.push(`/${search}/search/${keyword}`);
         } else {
             history.push('/');         
         }

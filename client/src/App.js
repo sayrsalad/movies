@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -49,22 +50,22 @@ import Dashboard from './components/admin/Dashboard';
 // import EditProducer from './components/layouts/producer/edit.producer.component';
 
 library.add(fas);
+library.add(far);
 
 const App = () => {
 
-	const path = window.location.pathname.slice(1);
+	let path = window.location.pathname.slice(1);
 
 	useEffect(() => {
 
 		store.dispatch(loadUser());
 
-	}, [path]);
+	}, []);
 
+	// const { user, isAuthenticated } = useSelector(state => state.auth);
 	const { loading } = useSelector(state => state.movies);
 
 	return (
-
-
 
 		// 				<br />
 		// 				<PrivateRoute path="/" exact component={Home} />
@@ -88,15 +89,16 @@ const App = () => {
 		<Router>
 			<div className="App">
 				{/* {!path === "dashboard" ? (<Header/>) : (path === "login" || path === "register" ? null : null)} */}
-				{path === "login" || path === "register" ? null : (loading ? null : (path === "dashboard" ? (<AdminHeader/>) : (<Header/>)))}
-				{/* {loading ? null : (path === "login" || path === "register" ? null : ((dashboard ? (<AdminHeader />) : (<Header />))))} */}
+				{/* {path === "login" || path === "register" ? null : (loading ? null : (path === "dashboard" ? (<AdminHeader/>) : (<Header/>)))} */}
+				{loading ? null : (path === "login" || path === "register" ? null : ((path === "dashboard" ? (<AdminHeader />) : (<Header />))))}
 
 				<div className="container-fluid">
 					<Route path="/" component={Home} exact />
-					<Route path="/search/:keyword" component={Home} />
+					<Route path="/movies/search/:keyword" component={Home} />
 					<Route path="/movie/:id" component={MovieDetails} exact />
 
 					<Route path="/actors" component={Actor} exact />
+					<Route path="/actors/search/:keyword" component={Actor} />
 					<Route path="/actor/:id" component={ActorDetails} exact />
 
 					<Route path="/login" exact component={Login} />

@@ -33,7 +33,7 @@ const Login = ({ history }) => {
 
 
     }, [dispatch, alert, isAuthenticated, error, history]);
-
+    
     const loginHandler = async (e) => {
         e.preventDefault();
         dispatch(login(email, password));

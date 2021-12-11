@@ -1,5 +1,5 @@
-html, .App {
-    background-color: #141414;
+html, body, .App {
+    background-color: #141414 !important;
 }
 
 .poster {
@@ -27,3 +27,15 @@ a {
 .text-white-25 {
     color: #D3D3D3;
 }
+
+.text-rate {
+    color: #FFC107;
+}
+
+.bg-dark-2 {
+    background-color: #141414 !important;
+}
+/* 
+ul .star {
+    cursor: pointer !important;
+} */
