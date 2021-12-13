@@ -90,3 +90,43 @@ exports.remove = catchAsyncErrors(async (req, res, next) => {
         next(error);
     }
 });
+
+exports.createActorReview = catchAsyncErrors(async (req, res, next) => {
+
+    const { rating, comment, _id } = req.body;
+    console.log(_id);
+    const review = {
+        user: req.user._id,
+        username: req.user.username,
+        rating: Number(rating),
+        comment
+    }
+
+    const actor = await Actor.findById(_id);
+
+    const isReviewed = actor.reviews.find(
+        r => r.user.toString() === req.user._id.toString()
+    );
+
+    if (isReviewed) {
+        actor.reviews.forEach(review => {
+            if (review.user.toString() === req.user._id.toString()) {
+                review.comment = comment;
+                review.rating = rating;
+            }
+        });
+
+    } else {
+        actor.reviews.push(review);
+        actor.numOfReviews = actor.reviews.length;
+    }
+
+    actor.ratings = actor.reviews.reduce((acc, item) => item.rating + acc, 0) / actor.reviews.length;
+
+    await actor.save({ validateBeforeSave: false });
+
+    res.status(200).json({
+        success: true
+    })
+
+});

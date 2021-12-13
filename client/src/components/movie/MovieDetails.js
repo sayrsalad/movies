@@ -7,7 +7,7 @@ import { useAlert } from 'react-alert';
 import { getMovieDetails, clearErrors, newMovieReview } from '../../actions/movieActions';
 import { NEW_MOVIE_REVIEW_RESET } from '../../constants/movieConstants';
 
-import MovieReviews from '../review/MovieReviews';
+import Review from '../review/Review';
 
 import MetaData from '../layout/MetaData';
 import Loader from '../layout/Loader';
@@ -119,11 +119,11 @@ const MovieDetails = ({ history, match }) => {
                             </div>
                             <div className="col ps-5 d-flex flex-column">
                                 <h2 className="fs-1 mt-4 fw-bolder">{movie.title}</h2>
-                                <button
+                                {/* <button
                                     className="button icon-left"
                                     onClick={history.goBack}>
                                     Back
-                                </button>
+                                </button> */}
                                 <div className="flex flex-wrap items-center text-white-50 text-sm">
                                     {/* <svg className="fill-current text-orange-500 w-4" viewBox="0 0 24 24"><g data-name="Layer 2"><path d="M17.56 21a1 1 0 01-.46-.11L12 18.22l-5.1 2.67a1 1 0 01-1.45-1.06l1-5.63-4.12-4a1 1 0 01-.25-1 1 1 0 01.81-.68l5.7-.83 2.51-5.13a1 1 0 011.8 0l2.54 5.12 5.7.83a1 1 0 01.81.68 1 1 0 01-.25 1l-4.12 4 1 5.63a1 1 0 01-.4 1 1 1 0 01-.62.18z" data-name="star" /></g></svg> */}
                                     <FontAwesomeIcon className="text-warning" icon="star" />
@@ -150,7 +150,6 @@ const MovieDetails = ({ history, match }) => {
                                     }
 
                                 </div>
-
 
                                 <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div className="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
@@ -219,7 +218,7 @@ const MovieDetails = ({ history, match }) => {
                         <div className="container mx-auto row text-white">
                             <h2 className="fs-1 mt-2 fw-bolder">Reviews</h2>
                             {movie.reviews && movie.reviews.length > 0 && (
-                                <MovieReviews reviews={movie.reviews} />
+                                <Review reviews={movie.reviews} />
                             )}
                         </div>
                     </div>

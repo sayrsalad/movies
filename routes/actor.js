@@ -3,7 +3,7 @@ const router = express.Router();
 const upload = require('../utils/upload');
 const { isAuthenticatedUser } = require("../middleware/auth");
 
-const { index, add, update, find, remove } = require('../controllers/actor');
+const { index, add, update, find, remove, createActorReview } = require('../controllers/actor');
 
 router.route('/').get(index);
 
@@ -14,5 +14,7 @@ router.route('/update/:id').post(isAuthenticatedUser, upload.single('profile'), 
 router.route('/:id').get(find);
 
 router.route('/:id').delete(isAuthenticatedUser, remove);
+
+router.route('/review').put(isAuthenticatedUser, createActorReview);
 
 module.exports = router;

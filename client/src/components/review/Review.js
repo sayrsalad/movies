@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const MovieReviews = ({ reviews }) => {
+const Review = ({ reviews }) => {
 
 
     const showRating = (rating) => {
@@ -35,4 +35,4 @@ const MovieReviews = ({ reviews }) => {
     )
 }
 
-export default MovieReviews
+export default Review
