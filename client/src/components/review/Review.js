@@ -1,9 +1,9 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import filter from '../../assets/Filter';
 
 const Review = ({ reviews }) => {
-
-
+    
     const showRating = (rating) => {
         var rows = [];
         for (var i = 0; i < rating; i++) {
@@ -26,8 +26,8 @@ const Review = ({ reviews }) => {
                     </div>
 
                     <p className="text-secondary fs-6">by {review.username}</p>
-                    <p className="review_comment m-0">{review.comment}</p>
-                    
+                    <p className="review_comment m-0">{review.comment && filter.clean(review.comment)}</p>
+
                     {/* <hr className="text-secondary"></hr> */}
                 </div>
             ))}
