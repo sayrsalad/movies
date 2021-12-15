@@ -4,17 +4,19 @@ const ErrorResponse = require('../utils/errorResponse');
 const catchAsyncErrors = require('../middleware/catchAsyncErrors');
 const APIFeatures = require('../utils/apiFeatures');
 
+const cloudinary = require('cloudinary');
+
 exports.index = catchAsyncErrors(async (req, res, next) => {
     try {
-        
+
         const resPerPage = 6;
         const moviesCount = await Movie.countDocuments();
-        
+
         const apiFeatures = new APIFeatures(Movie.find(), req.query)
             .search()
             .filter()
             .pagination(resPerPage);
-            
+
         const movies = await apiFeatures.query;
 
         const filteredMoviesCount = movies.length;
@@ -33,14 +35,31 @@ exports.index = catchAsyncErrors(async (req, res, next) => {
 
 exports.add = catchAsyncErrors(async (req, res, next) => {
     try {
-
         req.body.user = req.user.id;
 
-        const movie = new Movie(req.body);
+        let images = [];
+        if (typeof req.body.images === 'string') {
+            images.push(req.body.images);
+        } else {
+            images = req.body.images;
+        }
 
-        movie.poster = req.file.filename;
+        let imagesLinks = [];
 
-        movie.save();
+        for (let i = 0; i < images.length; i++) {
+            const result = await cloudinary.v2.uploader.upload(images[i], {
+                folder: 'movflix/posters'
+            });
+    
+            imagesLinks.push({
+                public_id: result.public_id,
+                url: result.secure_url
+            })
+        }
+
+        req.body.images = imagesLinks;
+
+        const movie = await Movie.create(req.body);
 
         res.status(200).json({
             status: "Record Added",

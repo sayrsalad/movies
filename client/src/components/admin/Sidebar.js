@@ -5,15 +5,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const Sidebar = (props) => {
     return (
         <div className={props.sidebarToggle === true ? "sidebar h-100 close" : "sidebar h-100"}>
-                <Link to="/" className="text-decoration-none text-white">
+                <Link to="/dashboard" className="text-decoration-none text-white">
                     <div className="logo-details">
                         <FontAwesomeIcon icon="ticket-alt" className="text-white" />
-                        <span className="logo_name fs-5 text-nowrap">Movie Dashboard</span>
+                        <span className="logo_name fs-5 text-nowrap">Dashboard</span>
                     </div>
                 </Link>
                 <ul className="nav-links px-0 pt-3">
                     <li>
-                        <Link to="/dashboard/movie">
+                        <Link to="/dashboard/movies">
                             <FontAwesomeIcon icon="film" className="text-white" />
                             <span className="link_name fs-6">Movie</span>
                         </Link>

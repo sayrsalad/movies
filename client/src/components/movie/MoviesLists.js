@@ -1,93 +1,111 @@
-import React, { Component } from 'react';
+import React, { Fragment, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
-import axios from 'axios';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useAlert } from 'react-alert';
+import { MDBDataTableV5 } from 'mdbreact';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const Movie = props => {
-    const d = new Date(props.movie.releaseDate);
-    props.movie.releaseDate = `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')}`;
-    return (
-        <tr>
-            <td className="ps-5">{props.movie.title}</td>
-            <td><img src={`../uploads/poster/${props.movie.poster}`} className="rounded poster" alt="..." /></td>
-            <td>{props.movie.story}</td>
-            <td>{props.movie.genre.name}</td>
-            <td>{props.movie.releaseDate}</td>
-            <td>{props.movie.duration}</td>
-            <td className="text-center fs-5">
-                <Link className="link-primary" to={'movie/edit/' + props.movie._id}><FontAwesomeIcon icon="pen-square" /></Link>
-            </td>
-            <td className="text-center fs-5">
-                <Link className="link-danger" to={'/movie'} onClick={() => { props.deleteMovie(props.movie._id) }}><FontAwesomeIcon icon="trash-alt" /></Link>
-            </td>
-        </tr>
-    );
-}
+import { getAdminMovies, clearErrors } from '../../actions/movieActions';
+// import { NEW_MOVIE_REVIEW_RESET } from '../../constants/movieConstants';
 
-export default class Movies extends Component {
-    constructor(props) {
-        super(props);
+import MetaData from '../layout/MetaData';
+import Loader from '../layout/Loader';
 
-        this.state = { movie: [] }
+const MoviesLists = ({ history }) => {
 
-        this.deleteMovie = this.deleteMovie.bind(this);
 
-        this.config = {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-            },
-        };
-    }
+    const alert = useAlert();
+    const dispatch = useDispatch();
 
-    componentDidMount() {
-        axios.get('http://localhost:5000/api/movie', this.config)
-            .then(res => {
-                this.setState({ movie: res.data.movie })
+    const { loading, error, movies } = useSelector(state => state.movies);
+    // const { error: deleteError, isDeleted } = useSelector(state => state.product);
+
+    useEffect(() => {
+        dispatch(getAdminMovies());
+
+        if (error) {
+            alert.error(error);
+            dispatch(clearErrors())
+        }
+
+        // if (deleteError) {
+        //     alert.error(deleteError);
+        //     dispatch(clearErrors())
+        // }
+
+        // if (isDeleted) {
+        //     alert.success('Movie deleted successfully');
+        //     history.push('/movie/admin');
+        //     dispatch({ type: DELETE_MOVIE_RESET })
+        // }
+
+    }, [dispatch, alert, error, history])
+
+    const setMovies = () => {
+        const data = {
+            columns: [
+                { label: 'ID', field: 'id', width: 210, sort: 'asc' },
+                { label: 'Title', field: 'title', width: 150, sort: 'asc' },
+                { label: 'Poster', field: 'poster', width: 230, sort: 'asc' },
+                { label: 'Release Date', field: 'releaseDate', width: 230, sort: 'asc' },
+                { label: 'Duration', field: 'duration', width: 100, sort: 'asc' },
+                { label: 'Genre', field: 'genre', width: 120, sort: 'asc' },
+                { label: 'Ratings', field: 'ratings', width: 230, sort: 'asc' },
+                { label: 'Reviews', field: 'numOfReviews', width: 230, sort: 'asc' },
+                { label: 'Actions', field: 'actions', width: 100 }
+            ],
+            rows: []
+        }
+
+        movies.forEach(movie => {
+            const date = new Date(movie.releaseDate);
+            data.rows.push({
+                id: movie._id,
+                title: movie.title,
+                poster: <img src={`${movie.poster.url}`} className="rounded poster" alt={`${movie.poster.public_id}`} />,
+                releaseDate: `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`,
+                duration: movie.duration,
+                genre: movie.genre,
+                ratings: movie.ratings,
+                numOfReviews: movie.numOfReviews,
+                actions:
+                    <Fragment>
+                        <Link to={`/admin/movie/${movie._id}`} className="btn btn-primary py-1 px-2">
+                            <FontAwesomeIcon icon="pencil-alt" />
+                        </Link>
+                        <button className="btn btn-danger py-1 px-2 ml-2" onClick={() => deleteMovieHandler(movie._id)}>
+                            <FontAwesomeIcon icon="trash" />
+                        </button>
+                    </Fragment>
             })
-            .catch(err => console.log('Error: ' + err));
+        })
 
+        return data;
     }
 
-    deleteMovie(id) {
-        axios.delete('http://localhost:5000/api/movie/' + id, this.config)
-            .then(res => console.log(res.data.message))
-            .catch(err => console.log('Error: ' + err));
-        this.setState({
-            movie: this.state.movie.filter(el => el._id !== id)
-        });
+    const deleteMovieHandler = (id) => {
+        // dispatch(deleteMovie(id));
     }
 
-    movies() {
-        return this.state.movie.map(currentMovie => {
-            return <Movie movie={currentMovie} deleteMovie={this.deleteMovie} key={currentMovie._id} />
-        });
-    }
-
-    render() {
-
-        return (
-            <div className="container table-responsive">
-                <Link className="mb-3 btn btn-primary" to="/movie/create">Add Movie</Link>
-
-                <table className="table table-striped table-borderless table-dark rounded-3 overflow-hidden">
-                    <thead>
-                        <tr>
-                            <th className="ps-5" scope="col">Title</th>
-                            <th scope="col">Poster</th>
-                            <th scope="col">Story</th>
-                            <th scope="col">Genre</th>
-                            <th scope="col">Release Date</th>
-                            <th scope="col">Duration</th>
-                            <th scope="col" colSpan="2" className="text-center">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.movies()}
-                    </tbody>
-                </table>
+    return (
+        <Fragment>
+            <MetaData title={'All Movies'} styles={'html, body, .App { background-color: #F3F3F3 !important; } .home-navbar {background: #141414 !important;} footer p {color: #000000 !important;}'} />
+            <div className="container-fluid">
+                <Fragment>
+                    {loading ? <Loader /> : (
+                        <MDBDataTableV5
+                            data={setMovies()}
+                            striped
+                            hover
+                            scrollX
+                            scrollY
+                            maxHeight='75vh'
+                        />
+                    )}
+                </Fragment>
             </div>
-        )
-
-    }
+        </Fragment>
+    )
 }
+
+export default MoviesLists

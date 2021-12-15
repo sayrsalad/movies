@@ -6,8 +6,12 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
+
+import "mdbreact/dist/css/mdb.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
+
 
 import { loadUser } from './actions/authActions';
 import store from './store';
@@ -30,13 +34,13 @@ import ActorDetails from './components/actor/ActorDetails'
 import AdminHeader from './components/admin/AdminHeader';
 import Dashboard from './components/admin/Dashboard';
 
+import MovieLists from './components/movie/MoviesLists';
+// import CreateMovie from './components/layouts/movie/create.movie.component';
+// import EditMovie from './components/layouts/movie/edit.movie.component';
+
 // import Navbar from './components/layouts/navbar.component';
 
 // import Home from './components/layouts/home.component';
-
-// import Movies from './components/layouts/movie/movies.component';
-// import CreateMovie from './components/layouts/movie/create.movie.component';
-// import EditMovie from './components/layouts/movie/edit.movie.component';
 
 // import Actors from './components/layouts/actor/actors.component';
 // import CreateActor from './components/layouts/actor/create.actor.component';
@@ -56,7 +60,7 @@ library.add(fab);
 
 const App = () => {
 
-	let path = window.location.pathname.slice(1);
+	let path = window.location.pathname.split('/')[1];
 
 	useEffect(() => {
 
@@ -94,7 +98,7 @@ const App = () => {
 				{/* {path === "login" || path === "register" ? null : (loading ? null : (path === "dashboard" ? (<AdminHeader/>) : (<Header/>)))} */}
 				{loading ? null : (path === "login" || path === "register" ? null : ((path === "dashboard" ? (<AdminHeader />) : (<Header />))))}
 
-				<div className="container-fluid">
+				<div className={path === "dashboard" ? "home-section" : "container-fluid" }>
 					<Route path="/" component={Home} exact />
 					<Route path="/movies/search/:keyword" component={Home} />
 					<Route path="/movie/:id" component={MovieDetails} exact />
@@ -108,6 +112,7 @@ const App = () => {
 					<ProtectedRoute path="/me" component={Profile} exact />
 
 					<ProtectedRoute path="/dashboard" isAdmin={true} component={Dashboard} exact />
+					<ProtectedRoute path="/dashboard/movies" isAdmin={true} component={MovieLists} exact />
 				</div>
 				{path === "login" || path === "register" ? null : (loading ? null : (path === "dashboard" ? null : (<Footer/>)))}
 			</div>
