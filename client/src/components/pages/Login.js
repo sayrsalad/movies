@@ -1,12 +1,14 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import GoogleLogin from 'react-google-login';
 import { Link } from "react-router-dom";
 import { useAlert } from 'react-alert';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import MetaData from '../layout/MetaData';
 import Loader from '../layout/Loader';
 
-import { login, clearErrors } from '../../actions/authActions';
+import { login, googleLogin, clearErrors } from '../../actions/authActions';
 
 import './login.css';
 
@@ -33,17 +35,25 @@ const Login = ({ history }) => {
 
 
     }, [dispatch, alert, isAuthenticated, error, history]);
-    
+
     const loginHandler = async (e) => {
         e.preventDefault();
         dispatch(login(email, password));
     };
 
+    const responseGoogleSuccess = async (res) => {
+        dispatch(googleLogin(res));
+    }
+
+    const responseGoogleFailure = () => {
+        console.log("Sign in was unsuccessful.")
+    }
+
     return (
         <Fragment>
             {loading ? <Loader /> : (
                 <Fragment>
-                    <MetaData title={'Login'} styles={'html, body, .App { background-color: #0d0d0d !important; }'}/>
+                    <MetaData title={'Login'} styles={'html, body, .App { background-color: #0d0d0d !important; }'} />
                     <section className="h-50">
                         <div className="container py-5 h-50">
                             <div className="row d-flex justify-content-center align-items-center h-75">
@@ -78,12 +88,28 @@ const Login = ({ history }) => {
                                                             <label htmlFor="password">Password</label>
                                                         </div>
 
+
                                                         <div className="pt-1 mb-4">
                                                             <button className="btn btn-danger btn-lg btn-block shadow-lg" type="submit">Login</button>
                                                         </div>
-                                                        
+
                                                         <Link to="#" className="small text-secondary">Forgot password?</Link>
-                                                        <p className="mb-5 pb-lg-2 text-secondary">Don't have an account? <Link className="link-light" to='/register'>Register Here</Link></p>
+                                                        <p className="mb-2 pb-lg-2 text-secondary">Don't have an account? <Link className="link-light" to='/register'>Register Here</Link></p>
+
+                                                        <small>or</small>
+
+                                                        <div className="pt-1 mb-4">
+                                                            <GoogleLogin
+                                                                clientId="924372861452-4fl88545df8le5tu7e6f1tlgclt2cp78.apps.googleusercontent.com"
+                                                                render={renderProps => (
+                                                                    <button onClick={renderProps.onClick} disabled={renderProps.disabled} className="btn btn-danger btn-lg btn-block shadow-lg"><FontAwesomeIcon icon={["fab","google"]} className="me-3"/>Login with Google</button>
+                                                                  )}
+                                                                onSuccess={responseGoogleSuccess}
+                                                                onFailure={responseGoogleFailure}
+                                                                cookiePolicy={'single_host_origin'}
+                                                            />
+                                                        </div>
+
                                                         <a href="#!" className="small text-secondary">Terms of use.</a>
                                                         <a href="#!" className="small text-secondary">Privacy policy</a>
                                                     </form>

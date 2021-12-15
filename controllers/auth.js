@@ -6,6 +6,8 @@ const sendEmail = require('../utils/sendEmail');
 
 const crypto = require('crypto');
 const cloudinary = require('cloudinary');
+const { OAuth2Client } = require('google-auth-library');
+const client = new OAuth2Client("924372861452-4fl88545df8le5tu7e6f1tlgclt2cp78.apps.googleusercontent.com");
 
 exports.register = catchAsyncErrors(async (req, res, next) => {
 
@@ -60,6 +62,110 @@ exports.login = catchAsyncErrors(async (req, res, next) => {
     } catch (error) {
         next(error);
     }
+});
+
+exports.googleLogin = catchAsyncErrors(async (req, res, next) => {
+
+    const { tokenId } = req.body;
+    // console.log(tokenId);
+
+    const response = await client.verifyIdToken({ idToken: tokenId, audience: "924372861452-4fl88545df8le5tu7e6f1tlgclt2cp78.apps.googleusercontent.com" });
+    const { email_verified, name, email, picture } = response.payload;
+
+    if (email_verified) {
+
+        try {
+            const user = await User.findOne({ email });
+
+            if (user) {
+                sendToken(user, 200, res);
+            } else {
+
+                console.log(name);
+                try {
+                    const username = name;
+                    const password = email + process.env.JWT_SECRET;
+                    const newUser = await User.create({
+                        username,
+                        email,
+                        password,
+                        avatar: {
+                            public_id: username,
+                            url: picture
+                        }
+                    });
+
+                    sendToken(newUser, 200, res);
+                } catch (error) {
+                    next(error);
+                }
+            }
+        } catch (error) {
+            return next(new ErrorResponse("Something went wrong", 400));
+        }
+
+
+
+        // User.findOne({ email }).exec(async (err, user) => {
+        //     if (err) {
+        //         return next(new ErrorResponse("Something went wrong", 400));
+        //     } else {
+        //         if (user) {
+        //             sendToken(user, 200, res);
+        //         } else {
+        //             try {
+        //                 const password = email + process.env.JWT_SECRET;
+        //                 const newUser = await User.create({
+        //                     name,
+        //                     email,
+        //                     password,
+        //                     avatar: {
+        //                         public_id: name,
+        //                         url: picture
+        //                     }
+        //                 });
+
+        //                 sendToken(newUser, 200, res);
+        //             } catch (error) {
+        //                 next(error);
+        //             }
+        //         }
+        //     }
+        // })
+    }
+
+
+    // client.verifyIdToken({ idToken: tokenId, audience: "924372861452-4fl88545df8le5tu7e6f1tlgclt2cp78.apps.googleusercontent.com" }).then((response) => {
+    //     const { email_verified, name, email, picture } = response.payload;
+    //     if (email_verified) {
+    //         User.findOne({ email }).exec(async (err, user) => {
+    //             if (err) {
+    //                 return next(new ErrorResponse("Something went wrong", 400));
+    //             } else {
+    //                 if (user) {
+    //                     sendToken(user, 200, res);
+    //                 } else {
+    //                     try {
+    //                         const password = email + process.env.JWT_SECRET;
+    //                         const newUser = await User.create({
+    //                             name,
+    //                             email,
+    //                             password,
+    //                             avatar: {
+    //                                 public_id: name,
+    //                                 url: picture
+    //                             }
+    //                         });
+
+    //                         sendToken(newUser, 200, res);
+    //                     } catch (error) {
+    //                         next(error);
+    //                     }
+    //                 }
+    //             }
+    //         })
+    //     }
+    // });
 });
 
 exports.forgotpassword = catchAsyncErrors(async (req, res, next) => {

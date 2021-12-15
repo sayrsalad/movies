@@ -94,7 +94,7 @@ exports.remove = catchAsyncErrors(async (req, res, next) => {
 exports.createActorReview = catchAsyncErrors(async (req, res, next) => {
 
     const { rating, comment, _id } = req.body;
-    console.log(_id);
+    
     const review = {
         user: req.user._id,
         username: req.user.username,
