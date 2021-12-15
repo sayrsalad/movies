@@ -130,3 +130,14 @@ exports.createActorReview = catchAsyncErrors(async (req, res, next) => {
     })
 
 });
+
+exports.getAdminActors = catchAsyncErrors(async (req, res, next) => {
+
+    const actors = await Actor.find();
+
+    res.status(200).json({
+        success: true,
+        actors
+    })
+
+});

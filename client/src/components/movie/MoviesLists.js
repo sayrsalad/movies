@@ -46,7 +46,7 @@ const MoviesLists = ({ history }) => {
             columns: [
                 { label: 'ID', field: 'id', width: 210, sort: 'asc' },
                 { label: 'Title', field: 'title', width: 150, sort: 'asc' },
-                { label: 'Poster', field: 'poster', width: 230, sort: 'asc' },
+                { label: 'Poster', field: 'poster', width: 230, sort: 'disabled' },
                 { label: 'Release Date', field: 'releaseDate', width: 230, sort: 'asc' },
                 { label: 'Duration', field: 'duration', width: 100, sort: 'asc' },
                 { label: 'Genre', field: 'genre', width: 120, sort: 'asc' },
@@ -70,7 +70,7 @@ const MoviesLists = ({ history }) => {
                 numOfReviews: movie.numOfReviews,
                 actions:
                     <Fragment>
-                        <Link to={`/admin/movie/${movie._id}`} className="btn btn-primary py-1 px-2">
+                        <Link to={`/admin/movie/${movie._id}`} className="btn btn-primary py-1 px-2 me-3">
                             <FontAwesomeIcon icon="pencil-alt" />
                         </Link>
                         <button className="btn btn-danger py-1 px-2 ml-2" onClick={() => deleteMovieHandler(movie._id)}>

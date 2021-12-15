@@ -5,7 +5,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { moviesReducer, movieDetailsReducer, newMovieReviewReducer } from './reducers/movieReducers';
 import { actorsReducer, actorDetailsReducer, newActorReviewReducer } from './reducers/actorReducers';
 
-import { authReducer } from './reducers/authReducers';
+import { authReducer, allUsersReducer } from './reducers/authReducers';
 
 const reducer = combineReducers({
     movies: moviesReducer,
@@ -16,7 +16,8 @@ const reducer = combineReducers({
     actorDetails: actorDetailsReducer,
     newActorReview: newActorReviewReducer,
 
-    auth: authReducer
+    auth: authReducer,
+    allUsers: allUsersReducer
 });
 
 let initialState = {};

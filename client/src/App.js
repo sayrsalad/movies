@@ -38,17 +38,9 @@ import MovieLists from './components/movie/MoviesLists';
 // import CreateMovie from './components/layouts/movie/create.movie.component';
 // import EditMovie from './components/layouts/movie/edit.movie.component';
 
-// import Navbar from './components/layouts/navbar.component';
-
-// import Home from './components/layouts/home.component';
-
 // import Actors from './components/layouts/actor/actors.component';
 // import CreateActor from './components/layouts/actor/create.actor.component';
 // import EditActor from './components/layouts/actor/edit.actor.component';
-
-// import Genres from './components/layouts/genre/genres.component';
-// import CreateGenre from './components/layouts/genre/create.genre.component';
-// import EditGenre from './components/layouts/genre/edit.genre.component';
 
 // import Producers from './components/layouts/producer/producers.component';
 // import CreateProducer from './components/layouts/producer/create.producer.component';
@@ -72,21 +64,12 @@ const App = () => {
 	const { loading } = useSelector(state => state.movies);
 
 	return (
-
-		// 				<br />
-		// 				<PrivateRoute path="/" exact component={Home} />
-
-		// 				<PrivateRoute path="/movie" exact component={Movies} />
 		// 				<PrivateRoute path="/movie/create" component={CreateMovie} />
 		// 				<PrivateRoute path="/movie/edit/:id" component={EditMovie} />
 
 		// 				<PrivateRoute path="/actor" exact component={Actors} />
 		// 				<PrivateRoute path="/actor/create" component={CreateActor} />
 		// 				<PrivateRoute path="/actor/edit/:id" component={EditActor} />
-
-		// 				<PrivateRoute path="/genre" exact component={Genres} />
-		// 				<PrivateRoute path="/genre/create" component={CreateGenre} />
-		// 				<PrivateRoute path="/genre/edit/:id" component={EditGenre} />
 
 		// 				<PrivateRoute path="/producer" exact component={Producers} />
 		// 				<PrivateRoute path="/producer/create" component={CreateProducer} />
