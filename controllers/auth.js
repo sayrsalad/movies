@@ -15,7 +15,7 @@ exports.register = catchAsyncErrors(async (req, res, next) => {
         folder: 'movflix/avatars',
         width: 150,
         crop: "scale"
-    })
+    });
 
     const { username, email, password } = req.body;
 

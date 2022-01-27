@@ -5,8 +5,8 @@ import { useAlert } from 'react-alert';
 import { MDBDataTableV5 } from 'mdbreact';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { getAdminMovies, clearErrors } from '../../actions/movieActions';
-// import { NEW_MOVIE_REVIEW_RESET } from '../../constants/movieConstants';
+import { getAdminMovies, deleteMovie, clearErrors } from '../../actions/movieActions';
+import { DELETE_MOVIE_RESET } from '../../constants/movieConstants';
 
 import MetaData from '../layout/MetaData';
 import Loader from '../layout/Loader';
@@ -18,7 +18,7 @@ const MoviesLists = ({ history }) => {
     const dispatch = useDispatch();
 
     const { loading, error, movies } = useSelector(state => state.movies);
-    // const { error: deleteError, isDeleted } = useSelector(state => state.product);
+    const { error: deleteError, isDeleted } = useSelector(state => state.movie);
 
     useEffect(() => {
         dispatch(getAdminMovies());
@@ -28,18 +28,18 @@ const MoviesLists = ({ history }) => {
             dispatch(clearErrors())
         }
 
-        // if (deleteError) {
-        //     alert.error(deleteError);
-        //     dispatch(clearErrors())
-        // }
+        if (deleteError) {
+            alert.error(deleteError);
+            dispatch(clearErrors())
+        }
 
-        // if (isDeleted) {
-        //     alert.success('Movie deleted successfully');
-        //     history.push('/movie/admin');
-        //     dispatch({ type: DELETE_MOVIE_RESET })
-        // }
+        if (isDeleted) {
+            alert.success('Movie deleted successfully');
+            history.push('/dashboard/movies');
+            dispatch({ type: DELETE_MOVIE_RESET });
+        }
 
-    }, [dispatch, alert, error, history])
+    }, [dispatch, alert, error, history, deleteError, isDeleted]);
 
     const setMovies = () => {
         const data = {
@@ -70,7 +70,7 @@ const MoviesLists = ({ history }) => {
                 numOfReviews: movie.numOfReviews,
                 actions:
                     <Fragment>
-                        <Link to={`/admin/movie/${movie._id}`} className="btn btn-primary py-1 px-2 me-3">
+                        <Link to={`/dashboard/movie/update/${movie._id}`} className="btn btn-primary py-1 px-2 me-3">
                             <FontAwesomeIcon icon="pencil-alt" />
                         </Link>
                         <button className="btn btn-danger py-1 px-2 ml-2" onClick={() => deleteMovieHandler(movie._id)}>
@@ -84,7 +84,7 @@ const MoviesLists = ({ history }) => {
     }
 
     const deleteMovieHandler = (id) => {
-        // dispatch(deleteMovie(id));
+        dispatch(deleteMovie(id));
     }
 
     return (

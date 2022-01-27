@@ -46,7 +46,7 @@ const Header = ({ history }) => {
                                 {/* <a className="nav-link text-white" href="/actor">Actors</a> */}
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link text-white" href="/#">Producers</a>
+                                <a className="nav-link text-white" href="/producers">Producers</a>
                             </li>
                         </ul>
                         <Route render={({ history }) => <Search history={history} search={path} />} />

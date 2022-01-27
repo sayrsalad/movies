@@ -22,11 +22,11 @@ const ActorRouter = require('./routes/actor');
 const ProducerRouter = require('./routes/producer');
 const GenreRouter = require('./routes/genre');
 
-app.use('/api/auth', AuthRouter);
-app.use('/api/movie', MovieRouter);
-app.use('/api/actor', ActorRouter);
-app.use('/api/producer', ProducerRouter);
-app.use('/api/genre', GenreRouter);
+app.use('/api', AuthRouter);
+app.use('/api', MovieRouter);
+app.use('/api', ActorRouter);
+app.use('/api', ProducerRouter);
+app.use('/api', GenreRouter);
 
 
 app.use(errorHandler);

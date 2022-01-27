@@ -26,6 +26,7 @@ const AdminHeader = (props) => {
     const { user, loading } = useSelector(state => state.auth);
 
     const logoutHandler = () => {
+
         dispatch(logout());
         alert.success('Logged out successfully.')
     }

@@ -69,28 +69,16 @@ const movieSchema = new Schema({
     },
     producers: [
         {
-            producer_id: {
-                type: mongoose.Schema.ObjectId,
-                ref: 'Producer',
-                required: true
-            },
-            producer_name: {
-                type: String,
-                required: true
-            }
+            type: mongoose.Schema.ObjectId,
+            ref: 'producer',
+            required: true
         }
     ],
     actors: [
         {
-            actor_id: {
-                type: mongoose.Schema.ObjectId,
-                ref: 'Actor',
-                required: true
-            },
-            actor_name: {
-                type: String,
-                required: true
-            }
+            type: mongoose.Schema.ObjectId,
+            ref: 'actor',
+            required: true
         }
     ],
     story: {

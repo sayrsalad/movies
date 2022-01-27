@@ -1,17 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const { isAuthenticatedUser } = require("../middleware/auth");
+const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
 
-const { index, add, update, find, remove } = require('../controllers/producer');
+const { index, add, update, find, remove,
+        getAdminProducers } = require('../controllers/producer');
 
-router.route('/').get(isAuthenticatedUser, index);
+router.route('/producers').get(index);
 
-router.route('/add').post(isAuthenticatedUser, add);
+router.route('/producer/add').post(isAuthenticatedUser, authorizeRoles('admin'), add);
 
-router.route('/update/:id').post(isAuthenticatedUser, update);
+router.route('/producer/update/:id').put(isAuthenticatedUser, authorizeRoles('admin'), update);
 
-router.route('/:id').get(isAuthenticatedUser, find);
+router.route('/producer/:id').get(find);
 
-router.route('/:id').delete(isAuthenticatedUser, remove);
+router.route('/admin/producer/:id').delete(isAuthenticatedUser, authorizeRoles('admin') , remove);
+
+router.route('/admin/producers').get(isAuthenticatedUser, authorizeRoles('admin') , getAdminProducers);
 
 module.exports = router;

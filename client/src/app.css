@@ -12,7 +12,6 @@ html, body, .App {
 }
 
 .thumb-post {
-
     object-position: center;
     /* Center the image within the element */
     width: 100%;
@@ -39,3 +38,13 @@ a {
 ul .star {
     cursor: pointer !important;
 } */
+
+.other-images {
+    height: 200px;
+    width: auto;
+}
+
+.actor-image,
+.producer-image {
+    height: 313px !important;
+}

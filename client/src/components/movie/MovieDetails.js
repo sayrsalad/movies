@@ -8,6 +8,8 @@ import { getMovieDetails, clearErrors, newMovieReview } from '../../actions/movi
 import { NEW_MOVIE_REVIEW_RESET } from '../../constants/movieConstants';
 
 import Review from '../review/Review';
+import ImageCards from '../image/ImageCards';
+import ActorCards from '../actor/ActorCards';
 
 import MetaData from '../layout/MetaData';
 import Loader from '../layout/Loader';
@@ -106,7 +108,7 @@ const MovieDetails = ({ history, match }) => {
         dispatch(newMovieReview(reviewData));
 
     }
-
+    console.log(movie);
     return (
         <Fragment>
             {loading ? <Loader className="mx-1" /> : (
@@ -189,6 +191,11 @@ const MovieDetails = ({ history, match }) => {
                     <div className="mt-3">
                         <div className="container mx-auto row text-white">
                             <h2 className="fs-1 mt-2 fw-bolder">Cast</h2>
+                            <div className="row justify-content-center">
+                                {movie.actors && movie.actors.map(actor => (
+                                    <ActorCards key={actor._id} actor={actor}/>
+                                ))}
+                            </div>
                         </div>
                     </div>
                     {/* <div className="mt-12">
@@ -209,6 +216,11 @@ const MovieDetails = ({ history, match }) => {
                     <div className="mt-3">
                         <div className="container mx-auto row text-white">
                             <h2 className="fs-1 mt-2 fw-bolder">Images</h2>
+                            <div className="row justify-content-center">
+                                {movie.images && movie.images.map(image => (
+                                    <ImageCards key={movie.images.public_id} image={image} />
+                                ))}
+                            </div>
                         </div>
                     </div>
 

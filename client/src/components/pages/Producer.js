@@ -6,19 +6,19 @@ import { useAlert } from 'react-alert';
 import MetaData from '../layout/MetaData';
 import Loader from '../layout/Loader';
 
-import ActorCards from '../actor/ActorCards';
-import { getActors } from '../../actions/actorActions';
+import ProducerCards from '../producer/ProducerCards';
+import { getProducers } from '../../actions/producerActions';
 
 import './home.css';
 
-const Actor = ({ match }) => {
+const Producer = ({ match }) => {
 
     const [currentPage, setCurrentPage] = useState(1);
 
     const alert = useAlert();
     const dispatch = useDispatch();
 
-    const { loading, actors, error, actorsCount, resPerPage } = useSelector(state => state.actors);
+    const { loading, producers, error, producersCount, resPerPage } = useSelector(state => state.producers);
 
     const keyword = match.params.keyword;
 
@@ -28,7 +28,7 @@ const Actor = ({ match }) => {
             return alert.error(error);
         }
 
-        dispatch(getActors(keyword, currentPage));
+        dispatch(getProducers(keyword, currentPage));
 
 
     }, [dispatch, alert, error, keyword, currentPage]);
@@ -41,19 +41,19 @@ const Actor = ({ match }) => {
         <Fragment>
             {loading ? <Loader /> : (
                 <Fragment>
-                    <MetaData title={'Actors'} />
+                    <MetaData title={'Producers'} />
                     <div className="row justify-content-center m-5">
-                        {actors && actors.map(actor => (
-                            <ActorCards key={actor._id} actor={actor} />
+                        {producers && producers.map(producer => (
+                            <ProducerCards key={producer._id} producer={producer} />
                         ))}
                     </div>
 
-                    {resPerPage <= actorsCount && (
+                    {resPerPage <= producersCount && (
                         <div className="d-flex justify-content-center mt-5 main-pagination">
                             <Pagination
                                 activePage={currentPage}
                                 itemsCountPerPage={resPerPage}
-                                totalItemsCount={actorsCount}
+                                totalItemsCount={producersCount}
                                 onChange={setCurrentPageNo}
                                 nextPageText={'Next'}
                                 prevPageText={'Prev'}
@@ -70,4 +70,4 @@ const Actor = ({ match }) => {
     )
 }
 
-export default Actor
+export default Producer

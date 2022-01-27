@@ -76,15 +76,9 @@ const actorSchema = new Schema({
     ],
     movies: [
         {
-            movie_id: {
-                type: mongoose.Schema.ObjectId,
-                ref: 'Movie',
-                required: true
-            },
-            movie_name: {
-                type: String,
-                required: true
-            }
+            type: mongoose.Schema.ObjectId,
+            ref: 'movie',
+            required: true
         }
     ]
 }, {

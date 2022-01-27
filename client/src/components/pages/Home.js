@@ -23,7 +23,7 @@ const Home = ({ match }) => {
     const dispatch = useDispatch();
 
     const { loading, movies, error, moviesCount, resPerPage, filteredMoviesCount } = useSelector(state => state.movies);
-
+    console.log(movies);
     const keyword = match.params.keyword;
 
     useEffect(() => {

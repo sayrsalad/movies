@@ -35,7 +35,19 @@ exports.index = catchAsyncErrors(async (req, res, next) => {
 
 exports.add = catchAsyncErrors(async (req, res, next) => {
     try {
+
         req.body.user = req.user.id;
+
+        const posterRes = await cloudinary.v2.uploader.upload(req.body.poster, {
+            folder: 'movflix/posters',
+            width: 150,
+            crop: "scale"
+        });
+
+        let poster = {
+            public_id: posterRes.public_id,
+            url: posterRes.secure_url
+        }
 
         let images = [];
         if (typeof req.body.images === 'string') {
@@ -50,7 +62,7 @@ exports.add = catchAsyncErrors(async (req, res, next) => {
             const result = await cloudinary.v2.uploader.upload(images[i], {
                 folder: 'movflix/posters'
             });
-    
+
             imagesLinks.push({
                 public_id: result.public_id,
                 url: result.secure_url
@@ -58,6 +70,7 @@ exports.add = catchAsyncErrors(async (req, res, next) => {
         }
 
         req.body.images = imagesLinks;
+        req.body.poster = poster;
 
         const movie = await Movie.create(req.body);
 
@@ -73,15 +86,56 @@ exports.add = catchAsyncErrors(async (req, res, next) => {
 
 exports.update = catchAsyncErrors(async (req, res, next) => {
     try {
-        const movie = await Movie.findByIdAndUpdate(req.params.id, req.body, {
+        let movie = await Movie.findById(req.params.id);
+
+        let images = [];
+        if (typeof req.body.images === 'string') {
+            images.push(req.body.images);
+        } else {
+            images = req.body.images;
+        }
+
+        if (images !== undefined) {
+
+            const result = await cloudinary.v2.uploader.destroy(movie.poster.public_id);
+
+            for (let i = 0; i < movie.images.length; i++) {
+                const result = await cloudinary.v2.uploader.destroy(movie.images[i].public_id);
+            }
+
+            const posterRes = await cloudinary.v2.uploader.upload(req.body.poster, {
+                folder: 'movflix/posters',
+                width: 150,
+                crop: "scale"
+            });
+    
+            let poster = {
+                public_id: posterRes.public_id,
+                url: posterRes.secure_url
+            }
+
+            let imagesLinks = [];
+
+            for (let i = 0; i < images.length; i++) {
+                const result = await cloudinary.v2.uploader.upload(images[i], {
+                    folder: 'movflix/posters'
+                });
+    
+                imagesLinks.push({
+                    public_id: result.public_id,
+                    url: result.secure_url
+                })
+            }
+    
+            req.body.images = imagesLinks;
+            req.body.poster = poster;
+        }
+
+        movie = await Movie.findByIdAndUpdate(req.params.id, req.body, {
             new: true,
             runValidators: true,
             useFindAndModify: false
         });
-
-        movie.poster = req.file.filename;
-
-        movie.save();
 
         res.status(200).json({
             success: true,
@@ -94,7 +148,7 @@ exports.update = catchAsyncErrors(async (req, res, next) => {
 
 exports.find = catchAsyncErrors(async (req, res, next) => {
     try {
-        const movie = await Movie.findById(req.params.id);
+        const movie = await Movie.findById(req.params.id).populate('actors');
 
         res.status(200).json({
             success: true,

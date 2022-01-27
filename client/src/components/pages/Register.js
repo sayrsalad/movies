@@ -20,7 +20,7 @@ const Register = ({ history }) => {
     const { username, email, password } = user;
 
     const [avatar, setAvatar] = useState('');
-    const [avatarPreview, setAvatarPreview] = useState('/uploads/user/empty_profile.png');
+    const [avatarPreview, setAvatarPreview] = useState('https://res.cloudinary.com/djqpxmv5o/image/upload/v1639001382/movflix/avatars/1636619587424empty_profile_f28fsh.png');
 
     const alert = useAlert();
     const dispatch = useDispatch();
@@ -128,7 +128,7 @@ const Register = ({ history }) => {
                                                         </figure>
                                                     </span>
 
-                                                    <input className="form-control bg-dark border-0 remove-form-design custom-file-input text-secondary" filename="avatar" type="file" id="avatar" data-name="avatar" name="avatar" onChange={onChange} />
+                                                    <input className="form-control bg-dark border-0 remove-form-design avatar-input text-secondary" filename="avatar" type="file" id="avatar" data-name="avatar" name="avatar" onChange={onChange} />
 
                                                 </div>
 

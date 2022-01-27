@@ -30,11 +30,11 @@ const UserSchema = new Schema({
     avatar: {
         public_id: {
             type: String,
-            default: 'user/empty_profile'
+            default: 'avatars/1636619587424empty_profile_f28fsh.png'
         },
         url: {
             type: String,
-            default: '../uploads/user/empty_profile.png'
+            default: 'https://res.cloudinary.com/djqpxmv5o/image/upload/v1639001382/movflix/avatars/1636619587424empty_profile_f28fsh.png'
         }
     },
     role: {

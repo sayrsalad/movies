@@ -14,21 +14,21 @@ const { register,
 
 const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
 
-router.route("/register").post(register);
+router.route("/auth/register").post(register);
 
-router.route("/login").post(login);
+router.route("/auth/login").post(login);
 
-router.route("/google/login").post(googleLogin);
+router.route("/auth/google/login").post(googleLogin);
 
-router.route("/logout").get(logout);
+router.route("/auth/logout").get(logout);
 
-router.route("/password/forgot").post(forgotpassword);
+router.route("/auth/password/forgot").post(forgotpassword);
 
-router.route("/password/reset/:token").put(resetpassword);
+router.route("/auth/password/reset/:token").put(resetpassword);
 
-router.route("/me").get(isAuthenticatedUser, getCurrentUser);
+router.route("/profile/me").get(isAuthenticatedUser, getCurrentUser);
 
-router.route("/password/update").put(isAuthenticatedUser, updatePassword);
+router.route("/auth/password/update").put(isAuthenticatedUser, updatePassword);
 
 router.route('/admin/users').get(isAuthenticatedUser, authorizeRoles('admin'), allUsers);
 

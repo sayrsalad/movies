@@ -20,22 +20,20 @@ const producerSchema = new Schema({
     },
     movies: [
         {
-            movie_id: {
-                type: mongoose.Schema.ObjectId,
-                ref: 'Movie',
-                required: true
-            },
-            movie_name: {
-                type: String,
-                required: true
-            }
+            type: mongoose.Schema.ObjectId,
+            ref: 'movie',
+            required: true
         }
     ],
     profile: {
-        type: String,
-        required: [true, 'Please enter valid profile picture'],
-        trim: true,
-        default: "1636619587424empty_profile.png"
+        public_id: {
+            type: String,
+            default: 'profiles/1636619587424empty_profile_pjbw6i'
+        },
+        url: {
+            type: String,
+            default: 'https://res.cloudinary.com/djqpxmv5o/image/upload/v1639001436/movflix/profiles/1636619587424empty_profile_pjbw6i.png'
+        }
     },
     images: [
         {

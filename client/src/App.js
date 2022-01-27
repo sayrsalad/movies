@@ -29,22 +29,25 @@ import Home from './components/pages/Home';
 import MovieDetails from './components/movie/MovieDetails';
 
 import Actor from './components/pages/Actor';
-import ActorDetails from './components/actor/ActorDetails'
+import ActorDetails from './components/actor/ActorDetails';
+
+import Producer from './components/pages/Producer';
+import ProducerDetails from './components/producer/ProducerDetails';
 
 import AdminHeader from './components/admin/AdminHeader';
 import Dashboard from './components/admin/Dashboard';
 
+import ActorsLists from './components/actor/ActorsLists';
+import NewActor from './components/admin/NewActor';
+import UpdateActor from './components/admin/UpdateActor';
+
 import MovieLists from './components/movie/MoviesLists';
-// import CreateMovie from './components/layouts/movie/create.movie.component';
-// import EditMovie from './components/layouts/movie/edit.movie.component';
+import NewMovie from './components/admin/NewMovie';
+import UpdateMovie from './components/admin/UpdateMovie';
 
-// import Actors from './components/layouts/actor/actors.component';
-// import CreateActor from './components/layouts/actor/create.actor.component';
-// import EditActor from './components/layouts/actor/edit.actor.component';
-
-// import Producers from './components/layouts/producer/producers.component';
-// import CreateProducer from './components/layouts/producer/create.producer.component';
-// import EditProducer from './components/layouts/producer/edit.producer.component';
+import ProducersLists from './components/producer/ProducersLists';
+import NewProducer from './components/admin/NewProducer';
+import UpdateProducer from './components/admin/UpdateProducer';
 
 library.add(fas);
 library.add(far);
@@ -60,26 +63,16 @@ const App = () => {
 
 	}, []);
 
-	// const { user, isAuthenticated } = useSelector(state => state.auth);
+	const { loading: authLoading } = useSelector(state => state.auth);
 	const { loading } = useSelector(state => state.movies);
 
 	return (
-		// 				<PrivateRoute path="/movie/create" component={CreateMovie} />
-		// 				<PrivateRoute path="/movie/edit/:id" component={EditMovie} />
-
-		// 				<PrivateRoute path="/actor" exact component={Actors} />
-		// 				<PrivateRoute path="/actor/create" component={CreateActor} />
-		// 				<PrivateRoute path="/actor/edit/:id" component={EditActor} />
-
-		// 				<PrivateRoute path="/producer" exact component={Producers} />
-		// 				<PrivateRoute path="/producer/create" component={CreateProducer} />
-		// 				<PrivateRoute path="/producer/edit/:id" component={EditProducer} />
 
 		<Router>
 			<div className="App">
 				{/* {!path === "dashboard" ? (<Header/>) : (path === "login" || path === "register" ? null : null)} */}
 				{/* {path === "login" || path === "register" ? null : (loading ? null : (path === "dashboard" ? (<AdminHeader/>) : (<Header/>)))} */}
-				{loading ? null : (path === "login" || path === "register" ? null : ((path === "dashboard" ? (<AdminHeader />) : (<Header />))))}
+				{authLoading ? null : (path === "login" || path === "register" ? null : ((path === "dashboard" ? (<AdminHeader />) : (<Header />))))}
 
 				<div className={path === "dashboard" ? "home-section" : "container-fluid" }>
 					<Route path="/" component={Home} exact />
@@ -90,12 +83,27 @@ const App = () => {
 					<Route path="/actors/search/:keyword" component={Actor} />
 					<Route path="/actor/:id" component={ActorDetails} exact />
 
+					<Route path="/producers" component={Producer} exact />
+					<Route path="/producer/:id" component={ProducerDetails} exact />
+
 					<Route path="/login" exact component={Login} />
 					<Route path="/register" exact component={Register} />
 					<ProtectedRoute path="/me" component={Profile} exact />
 
 					<ProtectedRoute path="/dashboard" isAdmin={true} component={Dashboard} exact />
+
 					<ProtectedRoute path="/dashboard/movies" isAdmin={true} component={MovieLists} exact />
+					<ProtectedRoute path="/dashboard/movie/add" isAdmin={true} component={NewMovie} exact />
+					<ProtectedRoute path="/dashboard/movie/update/:id" isAdmin={true} component={UpdateMovie} exact />
+					
+					<ProtectedRoute path="/dashboard/actors" isAdmin={true} component={ActorsLists} exact />
+					<ProtectedRoute path="/dashboard/actor/add" isAdmin={true} component={NewActor} exact />
+					<ProtectedRoute path="/dashboard/actor/update/:id" isAdmin={true} component={UpdateActor} exact />
+
+					<ProtectedRoute path="/dashboard/producers" isAdmin={true} component={ProducersLists} exact />
+					<ProtectedRoute path="/dashboard/producer/add" isAdmin={true} component={NewProducer} exact />
+					<ProtectedRoute path="/dashboard/producer/update/:id" isAdmin={true} component={UpdateProducer} exact />
+
 				</div>
 				{path === "login" || path === "register" ? null : (loading ? null : (path === "dashboard" ? null : (<Footer/>)))}
 			</div>

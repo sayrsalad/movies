@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import filter from '../../assets/Filter';
 
 const Review = ({ reviews }) => {
+
+    const [reviewArray, setReviewArray] = useState();
     
     const showRating = (rating) => {
         var rows = [];

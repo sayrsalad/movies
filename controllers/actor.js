@@ -4,6 +4,8 @@ const ErrorResponse = require('../utils/errorResponse');
 const catchAsyncErrors = require('../middleware/catchAsyncErrors');
 const APIFeatures = require('../utils/apiFeatures');
 
+const cloudinary = require('cloudinary');
+
 exports.index = catchAsyncErrors(async (req, res, next) => {
     try {
 
@@ -29,11 +31,42 @@ exports.index = catchAsyncErrors(async (req, res, next) => {
 
 exports.add = catchAsyncErrors(async (req, res, next) => {
     try {
-        const actor = new Actor(req.body);
+        
+        const profileRes = await cloudinary.v2.uploader.upload(req.body.profile, {
+            folder: 'movflix/profiles',
+            width: 150,
+            crop: "scale"
+        });
+        
+        let profile = {
+            public_id: profileRes.public_id,
+            url: profileRes.secure_url
+        }
 
-        actor.profile = req.file.filename;
+        let images = [];
+        if (typeof req.body.images === 'string') {
+            images.push(req.body.images);
+        } else {
+            images = req.body.images;
+        }
+       
+        let imagesLinks = [];
 
-        actor.save();
+        for (let i = 0; i < images.length; i++) {
+            const result = await cloudinary.v2.uploader.upload(images[i], {
+                folder: 'movflix/profiles'
+            });
+
+            imagesLinks.push({
+                public_id: result.public_id,
+                url: result.secure_url
+            })
+        }
+
+        req.body.images = imagesLinks;
+        req.body.profile = profile;
+
+        const actor = await Actor.create(req.body);
 
         res.status(200).json({
             status: "Record Added",
@@ -47,14 +80,57 @@ exports.add = catchAsyncErrors(async (req, res, next) => {
 
 exports.update = catchAsyncErrors(async (req, res, next) => {
     try {
-        const actor = await Actor.findById(req.params.id);
+        
+        let actor = await Actor.findById(req.params.id);
+        console.log("images");
+        let images = [];
+        if (typeof req.body.images === 'string') {
+            images.push(req.body.images);
+        } else {
+            images = req.body.images;
+        }
+        
+        if (images !== undefined) {
 
-        actor.profile = req.file.filename;
-        actor.firstname = req.body.firstname;
-        actor.lastname = req.body.lastname;
-        actor.email = req.body.email;
+            const result = await cloudinary.v2.uploader.destroy(actor.profile.public_id);
 
-        actor.save();
+            for (let i = 0; i < actor.images.length; i++) {
+                const result = await cloudinary.v2.uploader.destroy(actor.images[i].public_id);
+            }
+
+            const profileRes = await cloudinary.v2.uploader.upload(req.body.profile, {
+                folder: 'movflix/profiles',
+                width: 150,
+                crop: "scale"
+            });
+
+            let profile = {
+                public_id: profileRes.public_id,
+                url: profileRes.secure_url
+            }
+
+            let imagesLinks = [];
+
+            for (let i = 0; i < images.length; i++) {
+                const result = await cloudinary.v2.uploader.upload(images[i], {
+                    folder: 'movflix/profiles'
+                });
+    
+                imagesLinks.push({
+                    public_id: result.public_id,
+                    url: result.secure_url
+                })
+            }
+    
+            req.body.images = imagesLinks;
+            req.body.profile = profile;
+        }
+
+        actor = await Actor.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+            runValidators: true,
+            useFindAndModify: false
+        });
 
         res.status(200).json({
             success: true,

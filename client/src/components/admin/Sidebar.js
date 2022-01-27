@@ -3,62 +3,79 @@ import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Sidebar = (props) => {
+
+    const toggleDropdown = (e) => {
+        let arrowParent = e.target.parentElement.parentElement;
+        arrowParent.classList.toggle("showMenu");
+    }
+
+
     return (
         <div className={props.sidebarToggle === true ? "sidebar h-100 close" : "sidebar h-100"}>
-                <Link to="/dashboard" className="text-decoration-none text-white">
-                    <div className="logo-details">
-                        <FontAwesomeIcon icon="ticket-alt" className="text-white" />
-                        <span className="logo_name fs-5 text-nowrap">Dashboard</span>
-                    </div>
-                </Link>
-                <ul className="nav-links px-0 pt-3">
-                    <li>
-                        <Link to="/dashboard/movies">
-                            <FontAwesomeIcon icon="film" className="text-white" />
-                            <span className="link_name fs-6">Movie</span>
+            <Link to="/" className="text-decoration-none text-white">
+                <div className="logo-details">
+                    {/* <FontAwesomeIcon icon="ticket-alt" className="text-white" /> */}
+                    <span className="logo_name fw-bold text-nowrap mx-auto display-6 text-danger">MOVFLIX</span>
+                </div>
+            </Link>
+            <ul className="nav-links px-0 pt-3">
+                <li>
+                    <div className="iocn-link">
+                        <Link to="/dashboard">
+                            <FontAwesomeIcon icon="tachometer-alt" className="text-white main-side-nav-icon" />
+                            <span className="link_name fs-6">Dashboard</span>
                         </Link>
-                        <ul className="sub-menu blank">
-                            <li><Link to="/movie" className="link_name">Movies</Link></li>
-                        </ul>
-                    </li>
+                        {/* <FontAwesomeIcon icon="chevron-down" className="text-white arrow" onClick={toggleDropdown} /> */}
+                    </div>
+                    <ul className="sub-menu">
+                        <li><Link to="/dashboard" className="link_name">Dashboard</Link></li>
+                    </ul>
+                </li>
 
-                    <li>
-                        <Link to="/dashboard/actor">
-                            <FontAwesomeIcon icon="theater-masks" className="text-white" />
+                <li>
+                    <div className="iocn-link">
+                        <Link to="/dashboard/movies">
+                            <FontAwesomeIcon icon="film" className="text-white main-side-nav-icon" />
+                            <span className="link_name fs-6">Movies</span>
+                        </Link>
+                        <FontAwesomeIcon icon="chevron-down" className="text-white arrow" onClick={toggleDropdown} />
+                    </div>
+                    <ul className="sub-menu">
+                        <li><Link to="/dashboard/movies" className="link_name">Movies</Link></li>
+                        <li><Link to="/dashboard/movie/add"><FontAwesomeIcon icon="plus" className="submenu-side-nav-icon" />Add Movie</Link></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <div className="iocn-link">
+                        <Link to="/dashboard/actors">
+                            <FontAwesomeIcon icon="theater-masks" className="text-white main-side-nav-icon" />
                             <span className="link_name fs-6">Actors</span>
                         </Link>
-                        <ul className="sub-menu blank">
-                            <li><Link to="/actor" className="link_name">Actors</Link></li>
-                        </ul>
-                    </li>
+                        <FontAwesomeIcon icon="chevron-down" className="text-white arrow" onClick={toggleDropdown} />
+                    </div>
+                    <ul className="sub-menu">
+                        <li><Link to="/dashboard/actors" className="link_name">Actor</Link></li>
+                        <li><Link to="/dashboard/actor/add"><FontAwesomeIcon icon="plus" className="submenu-side-nav-icon" />Add Actor</Link></li>
+                    </ul>
+                </li>
 
-                    <li>
-                        <Link to="/dashboard/producer">
-                            <FontAwesomeIcon icon="bullhorn" className="text-white" />
+                <li>
+                    <div className="iocn-link">
+                        <Link to="/dashboard/producers">
+                            <FontAwesomeIcon icon="bullhorn" className="text-white main-side-nav-icon" />
                             <span className="link_name fs-6">Producers</span>
                         </Link>
-                        <ul className="sub-menu blank">
-                            <li><Link to="/producer" className="link_name">Genres</Link></li>
-                        </ul>
-                    </li>
+                        <FontAwesomeIcon icon="chevron-down" className="text-white arrow" onClick={toggleDropdown} />
+                    </div>
+                    <ul className="sub-menu">
+                        <li><Link to="/dashboard/producers" className="link_name">Producers</Link></li>
+                        <li><Link to="/dashboard/producer/add"><FontAwesomeIcon icon="plus" className="submenu-side-nav-icon" />Add Producer</Link></li>
+                    </ul>
+                </li>
 
-                    {/* <li className={dropdown === true ? "showMenu" : ""}>
-                <div className="iocn-link">
-                    <a href="/#">
-                        <i className='bx bx-collection' ></i>
-                        <span className="link_name">Category</span>
-                    </a>
-                    <FontAwesomeIcon icon="caret-down" className="text-white arrow" onClick={toggleDropdown} />
-                </div>
-                <ul className="sub-menu">
-                    <li><a className="link_name" href="/#">Category</a></li>
-                    <li><a href="/#">HTML CSS</a></li>
-                    <li><a href="/#">JavaScript</a></li>
-                    <li><a href="/#">PHP MySQL</a></li>
-                </ul>
-            </li> */}
 
-                    {/* <li>
+                {/* <li>
                 <div className="profile-details">
                     <div className="profile-content">
                         <img src={empty_profile} alt=" " />
@@ -70,7 +87,7 @@ const Sidebar = (props) => {
                     <i className='bx bx-log-out' ></i>
                 </div>
             </li> */}
-                </ul>
+            </ul>
         </div>
     )
 }

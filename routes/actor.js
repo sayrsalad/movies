@@ -1,23 +1,24 @@
 const express = require('express');
 const router = express.Router();
 const upload = require('../utils/upload');
-const { isAuthenticatedUser } = require("../middleware/auth");
+
+const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
 
 const { index, add, update, find, remove, createActorReview,
         getAdminActors } = require('../controllers/actor');
 
-router.route('/').get(index);
+router.route('/actors').get(index);
 
-router.route('/add').post(isAuthenticatedUser, upload.single('profile'), add);
+router.route('/actor/add').post(isAuthenticatedUser, add);
 
-router.route('/update/:id').post(isAuthenticatedUser, upload.single('profile'), update);
+router.route('/actor/update/:id').put(isAuthenticatedUser, authorizeRoles('admin'), update);
 
-router.route('/admin').get(getAdminActors);
+router.route('/admin/actors').get(isAuthenticatedUser, authorizeRoles('admin') ,getAdminActors);
 
-router.route('/:id').get(find);
+router.route('/actor/:id').get(find);
 
-router.route('/:id').delete(isAuthenticatedUser, remove);
+router.route('/admin/actor/:id').delete(isAuthenticatedUser, authorizeRoles('admin'), remove);
 
-router.route('/review').put(isAuthenticatedUser, createActorReview);
+router.route('/actor/review').put(isAuthenticatedUser, createActorReview);
 
 module.exports = router;

@@ -33,8 +33,6 @@
 }
 
 .sidebar .logo-details .logo_name {
-    font-size: 22px;
-    color: #fff;
     font-weight: 600;
     transition: 0.3s ease;
     transition-delay: 0.1s;
@@ -80,7 +78,7 @@
     display: block
 }
 
-.sidebar .nav-links li svg {
+.sidebar .nav-links li svg.main-side-nav-icon {
     height: 50px;
     min-width: 25px;
     text-align: center;
@@ -90,6 +88,20 @@
     cursor: pointer;
     transition: all 0.3s ease;
     margin: 0 20px 0 25px;
+}
+
+.sidebar .nav-links li svg.submenu-side-nav-icon {
+    transition: all 0.3s ease;
+    margin: 0 20px 0;
+}
+
+.sidebar .nav-links li svg.arrow {
+    height: 20px;
+    width: 40px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0 15px 0 25px;
+    /*Other styles*/
 }
 
 .sidebar .nav-links li.showMenu svg.arrow {
@@ -119,7 +131,7 @@
 }
 
 .sidebar .nav-links li .sub-menu {
-    padding: 6px 6px 14px 80px;
+    padding: 6px 6px 14px 30px;
     margin-top: -10px;
     background: #1d1b31;
     display: none;

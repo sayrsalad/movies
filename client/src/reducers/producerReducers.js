@@ -1,59 +1,59 @@
 import {
-    ADMIN_MOVIES_REQUEST,
-    ADMIN_MOVIES_SUCCESS,
-    ADMIN_MOVIES_FAIL,
-    ALL_MOVIES_REQUEST,
-    ALL_MOVIES_SUCCESS,
-    ALL_MOVIES_FAIL,
-    NEW_MOVIE_REQUEST,
-    NEW_MOVIE_RESET,
-    NEW_MOVIE_SUCCESS,
-    NEW_MOVIE_FAIL,
-    DELETE_MOVIE_REQUEST,
-    DELETE_MOVIE_RESET,
-    DELETE_MOVIE_SUCCESS,
-    DELETE_MOVIE_FAIL,
-    UPDATE_MOVIE_REQUEST,
-    UPDATE_MOVIE_RESET,
-    UPDATE_MOVIE_SUCCESS,
-    UPDATE_MOVIE_FAIL,
-    MOVIE_DETAILS_REQUEST,
-    MOVIE_DETAILS_SUCCESS,
-    MOVIE_DETAILS_FAIL,
-    NEW_MOVIE_REVIEW_REQUEST,
-    NEW_MOVIE_REVIEW_RESET,
-    NEW_MOVIE_REVIEW_SUCCESS,
-    NEW_MOVIE_REVIEW_FAIL,
+    ADMIN_PRODUCERS_REQUEST,
+    ADMIN_PRODUCERS_SUCCESS,
+    ADMIN_PRODUCERS_FAIL,
+    ALL_PRODUCERS_REQUEST,
+    ALL_PRODUCERS_SUCCESS,
+    ALL_PRODUCERS_FAIL,
+    NEW_PRODUCER_REQUEST,
+    NEW_PRODUCER_RESET,
+    NEW_PRODUCER_SUCCESS,
+    NEW_PRODUCER_FAIL,
+    DELETE_PRODUCER_REQUEST,
+    DELETE_PRODUCER_RESET,
+    DELETE_PRODUCER_SUCCESS,
+    DELETE_PRODUCER_FAIL,
+    UPDATE_PRODUCER_REQUEST,
+    UPDATE_PRODUCER_RESET,
+    UPDATE_PRODUCER_SUCCESS,
+    UPDATE_PRODUCER_FAIL,
+    PRODUCER_DETAILS_REQUEST,
+    PRODUCER_DETAILS_SUCCESS,
+    PRODUCER_DETAILS_FAIL,
+    NEW_PRODUCER_REVIEW_REQUEST,
+    NEW_PRODUCER_REVIEW_RESET,
+    NEW_PRODUCER_REVIEW_SUCCESS,
+    NEW_PRODUCER_REVIEW_FAIL,
     CLEAR_ERRORS
 
-} from '../constants/movieConstants';
+} from '../constants/producerConstants';
 
-export const moviesReducer = (state = { movies: [] }, action) => {
+export const producersReducer = (state = { producers: [] }, action) => {
     switch (action.type) {
-        case ADMIN_MOVIES_REQUEST:
-        case ALL_MOVIES_REQUEST:
+        case ADMIN_PRODUCERS_REQUEST:
+        case ALL_PRODUCERS_REQUEST:
             return {
                 loading: true,
-                movies: []
+                producers: []
             }
 
-        case ADMIN_MOVIES_SUCCESS:
+        case ADMIN_PRODUCERS_SUCCESS:
             return {
                 loading: false,
-                movies: action.payload
+                producers: action.payload
             }
 
-        case ALL_MOVIES_SUCCESS:
+        case ALL_PRODUCERS_SUCCESS:
             return {
                 loading: false,
-                movies: action.payload.movies,
-                moviesCount: action.payload.moviesCount,
-                filteredMoviesCount: action.payload.filteredMoviesCount,
+                producers: action.payload.producers,
+                producersCount: action.payload.producersCount,
+                filteredProducersCount: action.payload.filteredProducersCount,
                 resPerPage: action.payload.resPerPage
             }
         
-        case ADMIN_MOVIES_FAIL:
-        case ALL_MOVIES_FAIL:
+        case ADMIN_PRODUCERS_FAIL:
+        case ALL_PRODUCERS_FAIL:
             return {
                 loading: false,
                 error: action.payload
@@ -70,29 +70,29 @@ export const moviesReducer = (state = { movies: [] }, action) => {
     }
 }
 
-export const newMovieReducer = (state = { movie: {} }, action) => {
+export const newProducerReducer = (state = { producer: {} }, action) => {
     switch (action.type) {
 
-        case NEW_MOVIE_REQUEST:
+        case NEW_PRODUCER_REQUEST:
             return {
                 ...state,
                 loading: true
             }
 
-        case NEW_MOVIE_SUCCESS:
+        case NEW_PRODUCER_SUCCESS:
             return {
                 loading: false,
                 success: action.payload.success,
-                movie: action.payload.movie
+                producer: action.payload.producer
             }
 
-        case NEW_MOVIE_FAIL:
+        case NEW_PRODUCER_FAIL:
             return {
                 ...state,
                 error: action.payload
             }
         
-        case NEW_MOVIE_RESET:
+        case NEW_PRODUCER_RESET:
             return {
                 ...state,
                 success: false
@@ -109,22 +109,22 @@ export const newMovieReducer = (state = { movie: {} }, action) => {
     }
 }
 
-export const movieDetailsReducer = (state = { movie: {} }, action) => {
+export const producerDetailsReducer = (state = { producer: {} }, action) => {
     switch (action.type) {
 
-        case MOVIE_DETAILS_REQUEST:
+        case PRODUCER_DETAILS_REQUEST:
             return {
                 ...state,
                 loading: true
             }
 
-        case MOVIE_DETAILS_SUCCESS:
+        case PRODUCER_DETAILS_SUCCESS:
             return {
                 loading: false,
-                movie: action.payload
+                producer: action.payload
             }
 
-        case MOVIE_DETAILS_FAIL:
+        case PRODUCER_DETAILS_FAIL:
             return {
                 ...state,
                 error: action.payload
@@ -141,24 +141,24 @@ export const movieDetailsReducer = (state = { movie: {} }, action) => {
     }
 }
 
-export const movieReducer = (state = {}, action) => {
+export const producerReducer = (state = {}, action) => {
     switch (action.type) {
 
-        case DELETE_MOVIE_REQUEST:
-        case UPDATE_MOVIE_REQUEST:
+        case DELETE_PRODUCER_REQUEST:
+        case UPDATE_PRODUCER_REQUEST:
             return {
                 ...state,
                 loading: true
             }
 
-        case DELETE_MOVIE_SUCCESS:
+        case DELETE_PRODUCER_SUCCESS:
             return {
                 ...state,
                 loading: false,
                 isDeleted: action.payload
             }
 
-        case UPDATE_MOVIE_SUCCESS:
+        case UPDATE_PRODUCER_SUCCESS:
             return {
                 ...state,
                 loading: false,
@@ -166,20 +166,20 @@ export const movieReducer = (state = {}, action) => {
             }
 
 
-        case DELETE_MOVIE_FAIL:
-        case UPDATE_MOVIE_FAIL:
+        case DELETE_PRODUCER_FAIL:
+        case UPDATE_PRODUCER_FAIL:
             return {
                 ...state,
                 error: action.payload
             }
 
-        case DELETE_MOVIE_RESET:
+        case DELETE_PRODUCER_RESET:
             return {
                 ...state,
                 isDeleted: false
             }
 
-        case UPDATE_MOVIE_RESET:
+        case UPDATE_PRODUCER_RESET:
             return {
                 ...state,
                 isUpdated: false
@@ -196,28 +196,28 @@ export const movieReducer = (state = {}, action) => {
     }
 }
 
-export const newMovieReviewReducer = (state = {}, action) => {
+export const newProducerReviewReducer = (state = {}, action) => {
     switch (action.type) {
 
-        case NEW_MOVIE_REVIEW_REQUEST:
+        case NEW_PRODUCER_REVIEW_REQUEST:
             return {
                 ...state,
                 loading: true
             }
 
-        case NEW_MOVIE_REVIEW_SUCCESS:
+        case NEW_PRODUCER_REVIEW_SUCCESS:
             return {
                 loading: false,
                 success: action.payload
             }
 
-        case NEW_MOVIE_REVIEW_FAIL:
+        case NEW_PRODUCER_REVIEW_FAIL:
             return {
                 ...state,
                 error: action.payload
             }
         
-        case NEW_MOVIE_REVIEW_RESET:
+        case NEW_PRODUCER_REVIEW_RESET:
             return {
                 ...state,
                 success: false

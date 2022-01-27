@@ -101,7 +101,7 @@ export const loadUser = () => async (dispatch) => {
 
         dispatch({ type: LOAD_USER_REQUEST });
 
-        const { data } = await axios.get('/api/auth/me');
+        const { data } = await axios.get('/api/profile/me');
 
         dispatch({
             type: LOAD_USER_SUCCESS,
@@ -138,7 +138,7 @@ export const allUsers = () => async (dispatch) => {
 
         dispatch({ type: ALL_USERS_REQUEST });
 
-        const { data } = await axios.get('/api/auth/admin/users');
+        const { data } = await axios.get('/api/admin/users');
 
         dispatch({
             type: ALL_USERS_SUCCESS,

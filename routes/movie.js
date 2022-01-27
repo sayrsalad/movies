@@ -8,24 +8,23 @@ const { index, add, update, find, remove, createMovieReview, getMovieReviews, de
         getAdminMovies
 } = require('../controllers/movie');
 
-// router.route('/').get(isAuthenticatedUser, authorizeRoles('admin'), index);
-router.route('/').get(index);
+router.route('/movies').get(index);
 
-router.route('/add').post(isAuthenticatedUser, upload.single('poster'), add);
+router.route('/movie/add').post(isAuthenticatedUser, authorizeRoles('admin'), add);
 
-router.route('/update/:id').post(isAuthenticatedUser, upload.single('poster'), update);
+router.route('/movie/update/:id').put(isAuthenticatedUser, authorizeRoles('admin'), update);
 
-router.route('/reviews').get(isAuthenticatedUser, getMovieReviews);
+router.route('/movie/reviews').get(isAuthenticatedUser, getMovieReviews);
 
-router.route('/reviews').delete(isAuthenticatedUser, deleteMovieReview);
+router.route('/movie/reviews').delete(isAuthenticatedUser, deleteMovieReview);
 
-router.route('/admin').get(getAdminMovies);
+router.route('/admin/movies').get(isAuthenticatedUser, authorizeRoles('admin'), getAdminMovies);
 
-router.route('/:id').get(find);
+router.route('/movie/:id').get(find);
 
-router.route('/:id').delete(isAuthenticatedUser, remove);
+router.route('/admin/movie/:id').delete(isAuthenticatedUser, authorizeRoles('admin'), remove);
 
-router.route('/review').put(isAuthenticatedUser, createMovieReview);
+router.route('/movie/review').put(isAuthenticatedUser, createMovieReview);
 
 
 
